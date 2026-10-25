@@ -692,6 +692,15 @@ mark{border-radius:0}
 .welcome .btn.accent{background:var(--stone);border-color:var(--stone);color:var(--yellow)}
 .welcome .btn.accent:hover{background:#2B2A28;border-color:#2B2A28}
 .send.stop{background:var(--stone)}
+
+/* v1.9 · Teletipo de clase con clave */
+.class-pick{margin-top:12px;padding:12px 14px;background:var(--practice);border:1px solid var(--line);border-left:5px solid var(--yellow)}
+.class-pick label{display:block;font-family:var(--font-slab);font-weight:850;font-size:.66rem;letter-spacing:.13em;text-transform:uppercase;color:var(--ink);margin:0 0 6px}
+.key-row{display:flex;gap:8px;flex-wrap:wrap}
+.key-row input{flex:1;min-width:170px;border:1.5px solid var(--line);border-radius:var(--r);padding:9px 12px;font:inherit;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink);background:#fff}
+.key-row input::placeholder{font-weight:400;letter-spacing:.02em;text-transform:none;color:var(--muted)}
+.key-row input:focus{outline:none;border-color:var(--ink)}
+.class-pick .err{margin:8px 0 0}
 </style>
 </head>
 <body>
@@ -699,7 +708,7 @@ mark{border-radius:0}
 <div class="app">
 <header class="top">
 <div class="brand">
-<div class="wordmark"><h1 aria-label="PlumIA"><svg class="p-nib" viewBox="0 0 46 108" aria-hidden="true" focusable="false"><path fill-rule="evenodd" d="M2 0H30C41 0 46 8 46 22V25C46 40 40 47 30 47H17V86L9.5 107L2 86Z M31 17.5a6.5 6.5 0 1 0 0.01 0Z M7.4 66H11.6L9.75 107H9.25Z"/></svg><span aria-hidden="true">lum<em>IA</em></span></h1><span class="ver">v1.8 · L</span></div>
+<div class="wordmark"><h1 aria-label="PlumIA"><svg class="p-nib" viewBox="0 0 46 108" aria-hidden="true" focusable="false"><path fill-rule="evenodd" d="M2 0H30C41 0 46 8 46 22V25C46 40 40 47 30 47H17V86L9.5 107L2 86Z M31 17.5a6.5 6.5 0 1 0 0.01 0Z M7.4 66H11.6L9.75 107H9.25Z"/></svg><span aria-hidden="true">lum<em>IA</em></span></h1><span class="ver">v1.9 · L</span></div>
 </div>
 <ol class="rail" id="rail" aria-label="Fases de la noticia"></ol>
 <div class="top-actions">
@@ -1374,8 +1383,8 @@ h += `<div class="msg ai"><div class="bubble welcome">
 <button class="btn accent" id="startBtn" type="button">Teletipo aleatorio</button>
 <button class="btn outline" id="classBtn" type="button">Teletipo de clase</button>
 </div>
-<p class="small start-help">Aleatorio: PlumIA inventa uno nuevo. De clase: el mismo para todos, el que indique tu profesor.</p>
-<div class="class-pick" id="classPick" hidden>${TELETIPOS_CLASE.map(t=>`<button type="button" class="class-item" data-class="${esc(t.id)}"><b>${esc(t.id)}</b><span>${esc(t.titulo)}</span></button>`).join('')}</div>
+<p class="small start-help">Aleatorio: PlumIA inventa uno nuevo. De clase: el mismo para todos, con la clave que te dé tu profesor.</p>
+<form class="class-pick" id="classPick" hidden autocomplete="off"><label for="classKey">Clave del profesor</label><div class="key-row"><input id="classKey" type="text" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="Escribe la clave que te ha dado"><button class="btn" id="classGo" type="submit">Abrir teletipo</button></div><p class="err" id="classErr" hidden></p></form>
 <p class="err" id="startErr" hidden></p></div></div>`;
 }
 S.history.forEach(m=>{
@@ -1388,7 +1397,7 @@ if(busy) h += `<div class="msg ai" id="liveMsg"><div class="bubble"><div class="
 box.innerHTML = h;
 const sb = $('startBtn'); if(sb) sb.onclick = startStory;
 const cb = $('classBtn'); if(cb) cb.onclick = toggleClassPick;
-box.querySelectorAll('[data-class]').forEach(b=>b.onclick=()=>startClass(b.dataset.class));
+const cp = $('classPick'); if(cp) cp.onsubmit = e=>{ e.preventDefault(); submitClassKey(); };
 box.scrollTop = box.scrollHeight;
 }
 function renderChips(){
@@ -1582,92 +1591,45 @@ prompt_too_large:'La conversación es demasiado larga. Empieza de nuevo para seg
 const errMsg = e => ERR[e && e.code] || 'Se ha cortado la conexión con PlumIA. Vuelve a enviar tu mensaje.';
 
 /* =====================================================================
-   TELETIPOS DE CLASE · ejercicios fijos para que toda la clase trabaje
-   el mismo texto. Añade aquí los tuyos copiando el modelo:
-   - id: código corto que dirás en clase (ej. "T3").
-   - titulo: nombre visible para el alumno (no revela la noticia).
-   - es: los párrafos (4 o 5) EN SU ORDEN LÓGICO (la app los desordena y los une sola).
-   - claves: las W del hecho principal (la clave de corrección).
-   - solucion: las respuestas de referencia del profesor (opcional).
-   - ejemplo (opcional): modelos de OTRO suceso para la guía del modo principiante.
+   TELETIPOS DE CLASE · cifrados. Cada uno solo se abre con la clave que
+   reparte el profesor (AES-GCM; clave derivada con PBKDF2-SHA256).
+   Para añadir uno: pásale a Claude el teletipo, las W y la solución, y
+   te devolverá el bloque cifrado y su clave. Los textos en claro no están
+   en este código.
    ===================================================================== */
-const TELETIPOS_CLASE = [
- {
-  id:'T1',
-  titulo:'Política · Congreso',
-  es:[
-   'El líder del PP, Alberto Núñez Feijóo, ha instado este miércoles al presidente del Gobierno, Pedro Sánchez, a retirar "si le queda un mínimo de conciencia" el proyecto de ley que permitirá la excarcelación de 44 etarras y deje de "engañar", "comprar voluntades" y obtener "victorias miserables". Feijóo ha hecho esta petición en el debate del pleno del Congreso. "Tiene cinco días, hasta el 14 de este mes. Si le queda un mínimo de conciencia le ruego que lo aproveche y recapacite", ha añadido exigiendo la retirada de ese proyecto de ley.',
-   'La bancada del Partido Popular detuvo momentáneamente la comparecencia ante el Pleno del Congreso del presidente del Gobierno, Pedro Sánchez, con una ovación a la senadora Marimar Blanco, hermana del concejal Miguel Ángel Blanco, asesinado a manos de ETA en 1997.',
-   'Blanco entró el hemiciclo en plena alocución de Sánchez y arrancó los aplausos de los diputados del PP, que se levantaron durante un minuto ante el silencio del presidente del Gobierno. Este movimiento se produce en plena tormenta por la reforma judicial que permitirá a presos de ETA que hayan cumplido parte de la pena en Francia salir antes de la cárcel.',
-   'La senadora se sentó junto al líder del PP, Alberto Núñez Feijóo, quien exigirá este miércoles al presidente del Gobierno que retire la modificación legislativa con el objetivo de “retratarle”, una vez que el Ejecutivo ha confirmado su negativa a dar marcha atrás.'
-  ],
-  claves:{
-   valor_humano:'La memoria de las víctimas del terrorismo y la justicia: que los presos de ETA cumplan sus penas.',
-   quien:'El líder del PP, Alberto Núñez Feijóo',
-   que:'Insta al presidente del Gobierno, Pedro Sánchez, a retirar el proyecto de ley que permitirá la excarcelación anticipada de 44 etarras',
-   como:'Apelando a su conciencia («si le queda un mínimo de conciencia») y dándole cinco días de plazo, hasta el 14 de este mes, para que recapacite',
-   donde:'En el debate del pleno del Congreso',
-   cuando:'Este miércoles',
-   por_que:'Porque la reforma permitirá salir antes de la cárcel a presos de ETA que cumplieron parte de la pena en Francia, y el Gobierno se niega a dar marcha atrás (Feijóo le acusa de «engañar» y «comprar voluntades»)'
-  },
-  solucion:{
-   antetitulo:'Este miércoles durante el pleno del Congreso',
-   titular:'Feijóo le pide a Sánchez que retire el proyecto de ley que permitirá la excarcelación anticipada de 44 etarras',
-   subtitulo:'El líder del PP insta al presidente, «si le queda un mínimo de conciencia», a que recapacite seguir adelante con la tramitación',
-   entradilla:'El líder del PP, Alberto Núñez Feijóo, ha instado este miércoles al presidente del Gobierno, Pedro Sánchez, a retirar "si le queda un mínimo de conciencia" el proyecto de ley que permitirá la excarcelación de 44 etarras y deje de "engañar", "comprar voluntades" y obtener "victorias miserables". Feijóo ha hecho esta petición en el debate del pleno del Congreso. "Tiene cinco días, hasta el 14 de este mes. Si le queda un mínimo de conciencia le ruego que lo aproveche y recapacite", ha añadido exigiendo la retirada de ese proyecto de ley.',
-   cuerpo:[
-    'La bancada del Partido Popular detuvo momentáneamente la comparecencia ante el Pleno del Congreso del presidente del Gobierno, Pedro Sánchez, con una ovación a la senadora Marimar Blanco, hermana del concejal Miguel Ángel Blanco, asesinado a manos de ETA en 1997.',
-    'Blanco entró el hemiciclo en plena alocución de Sánchez y arrancó los aplausos de los diputados del PP, que se levantaron durante un minuto ante el silencio del presidente del Gobierno. Este movimiento se produce en plena tormenta por la reforma judicial que permitirá a presos de ETA que hayan cumplido parte de la pena en Francia salir antes de la cárcel.',
-    'La senadora se sentó junto al líder del PP, Alberto Núñez Feijóo, quien exigirá este miércoles al presidente del Gobierno que retire la modificación legislativa con el objetivo de “retratarle”, una vez que el Ejecutivo ha confirmado su negativa a dar marcha atrás.'
-   ]
-  }
- },
- {
-  id:'T2',
-  titulo:'Sociedad · comercio',
-  es:[
-   'Las tiendas que venden perros, gatos o hurones en sus locales comercial deberán cesar su actividad a partir del mes de octubre. La Ley de Protección de los Derechos y el Bienestar de los Animales que está vigente desde el 29 de septiembre de 2023 concedió un año de plazo a estos comercios para asumir la prohibición de la exposición y venta de este tipo de mascotas. La ley obliga a que su adquisición solo pueda hacerse, a partir de ahora, a través de criadores profesionales.',
-   'El Sistema Central de Registros fiscaliza ya este tipo de adquisiciones que busca, entre otras cosas, evitar las compras impulsivas considerando el animal como un objeto que puede ser regalado y posteriormente desechado si su dueño decide descartarlo por cualquier razón: desde falta de tiempo para cuidarlo hasta problemas económicos para mantenerlo, pasando por la pérdida de interés o el simple aburrimiento.',
-   'El objetivo de este sistema es “saber cuántos animales hay, dónde están, de quién son, quién y cómo los cría, dónde se venden”, al menos legalmente, según las indicaciones de José Ramón Becerra, a cargo de la dirección general de Derechos de los Animales integrada en el Ministerio de Derechos Sociales y Agenda 2030 (MDSA).',
-   'Pese a la entrada en vigor de esta ley y a que el MDSA destina casi 2 millones de euros a entidades de protección animal para sufragar parte de los gastos de su cuidado, las asociaciones animalistas siguen siendo críticas. Un ejemplo es su principal formación política, PACMA, quien la calificaba hace unos días de “norma insuficiente y excluyente que ha supuesto un grave retroceso en los derechos de los animales”.',
-   'Para Javier Luna, su presidente, la ley “ha fallado en su principal objetivo: proteger a los animales” y “lo que es peor: el abandono y el maltrato han aumentado” cuando “existen leyes autonómicas mucho más avanzadas”.'
-  ],
-  claves:{
-   valor_humano:'El bienestar y la protección de los animales de compañía frente a las compras impulsivas y el abandono.',
-   quien:'Las tiendas que venden perros, gatos o hurones',
-   que:'Dejarán de vender estos animales: deberán cesar esa actividad',
-   como:'Por la prohibición de exponerlos y venderlos en los comercios; a partir de ahora solo se podrán adquirir a través de criadores profesionales',
-   donde:'En sus locales comerciales (en España)',
-   cuando:'A partir del mes de octubre',
-   por_que:'Porque vence el año de plazo que les concedió la Ley de Protección de los Derechos y el Bienestar de los Animales, vigente desde el 29 de septiembre de 2023'
-  },
-  solucion:{
-   antetitulo:'Ley de Bienestar Animal',
-   titular:'La tiendas de animales dejarán de vender perros, gatos y hurones a partir de octubre',
-   subtitulo:'El gobierno prohibe su exposición en los comercios y solo se podrán comprar a criadores profesionales',
-   entradilla:'Las tiendas que venden perros, gatos o hurones en sus locales comercial deberán cesar su actividad a partir del mes de octubre. La Ley de Protección de los Derechos y el Bienestar de los Animales que está vigente desde el 29 de septiembre de 2023 concedió un año de plazo a estos comercios para asumir la prohibición de la exposición y venta de este tipo de mascotas. La ley obliga a que su adquisición solo pueda hacerse, a partir de ahora, a través de criadores profesionales.',
-   cuerpo:[
-    'El Sistema Central de Registros fiscaliza ya este tipo de adquisiciones que busca, entre otras cosas, evitar las compras impulsivas considerando el animal como un objeto que puede ser regalado y posteriormente desechado si su dueño decide descartarlo por cualquier razón: desde falta de tiempo para cuidarlo hasta problemas económicos para mantenerlo, pasando por la pérdida de interés o el simple aburrimiento.',
-    'El objetivo de este sistema es “saber cuántos animales hay, dónde están, de quién son, quién y cómo los cría, dónde se venden”, al menos legalmente, según las indicaciones de José Ramón Becerra, a cargo de la dirección general de Derechos de los Animales integrada en el Ministerio de Derechos Sociales y Agenda 2030 (MDSA).',
-    'Pese a la entrada en vigor de esta ley y a que el MDSA destina casi 2 millones de euros a entidades de protección animal para sufragar parte de los gastos de su cuidado, las asociaciones animalistas siguen siendo críticas. Un ejemplo es su principal formación política, PACMA, quien la calificaba hace unos días de “norma insuficiente y excluyente que ha supuesto un grave retroceso en los derechos de los animales”.',
-    'Para Javier Luna, su presidente, la ley “ha fallado en su principal objetivo: proteger a los animales” y “lo que es peor: el abandono y el maltrato han aumentado” cuando “existen leyes autonómicas mucho más avanzadas”.'
-   ]
-  }
- }
-];
+const TELETIPOS_CLASE_CIFRADOS = [{"s": "C4DO+az9epFqkobKFHQiUA==", "i": "ztM2hVMZPuZNokvD", "d": "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"}, {"s": "1ACmySVBGTQehbay5utnmQ==", "i": "TIF+86ASBIMNbiPT", "d": "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"}];
+const b64bytes = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
+async function abrirTeletipo(clave){
+const k = String(clave||'').toUpperCase().replace(/[^A-Z0-9]/g,''); if(!k) return null;
+if(!(window.crypto && crypto.subtle)) throw {code:'nocrypto'};
+const base = await crypto.subtle.importKey('raw', new TextEncoder().encode(k), 'PBKDF2', false, ['deriveKey']);
+for(const c of TELETIPOS_CLASE_CIFRADOS){
+try{
+const key = await crypto.subtle.deriveKey({name:'PBKDF2', salt:b64bytes(c.s), iterations:150000, hash:'SHA-256'}, base, {name:'AES-GCM', length:256}, false, ['decrypt']);
+const pt = await crypto.subtle.decrypt({name:'AES-GCM', iv:b64bytes(c.i)}, key, b64bytes(c.d));
+return JSON.parse(new TextDecoder().decode(pt));
+}catch(e){}
+}
+return null;
+}
 function loadStory(d, origen){
 S = blank(); S.claves=d.claves||{}; S.es=d.es.slice(0,5).map(String); S.solucion=(d.solucion&&typeof d.solucion==='object')?d.solucion:null; S.tema=String(d.tema||d.titulo||''); S.startedAt=Date.now(); S.modes=[MODE]; S.origen=origen;
 S.ejemplos = validarEjemplos(d.ejemplo);
 placeBody();
 }
-function startClass(id){
-const t = TELETIPOS_CLASE.find(x=>x.id===id); if(!t) return;
+async function submitClassKey(){
+const inp=$('classKey'), err=$('classErr'), btn=$('classGo'); if(!inp) return;
+err.hidden=true; btn.disabled=true; btn.textContent='Comprobando…';
+let t=null, fallo=null; try{ t = await abrirTeletipo(inp.value); }catch(e){ fallo=e; }
+if(!t){
+err.hidden=false; err.textContent = fallo && fallo.code==='nocrypto' ? 'Este navegador no permite abrir teletipos de clase. Prueba con Chrome o Edge actualizados.' : (inp.value.trim() ? 'Clave incorrecta. Revísala o pídesela a tu profesor.' : 'Escribe la clave que te ha dado tu profesor.');
+btn.disabled=false; btn.textContent='Abrir teletipo'; inp.focus(); inp.select(); return;
+}
 loadStory(t, 'clase · '+t.id);
 }
 function toggleClassPick(){
 const box=$('classPick'); if(!box) return;
-if(TELETIPOS_CLASE.length===1){ startClass(TELETIPOS_CLASE[0].id); return; }
-box.hidden=!box.hidden;
+box.hidden=!box.hidden; if(!box.hidden){ const i=$('classKey'); if(i) i.focus(); }
 }
 async function startStory(){
 const sm = await getSample();
