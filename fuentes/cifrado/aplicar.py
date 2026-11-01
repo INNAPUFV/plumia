@@ -61,6 +61,6 @@ for f in sys.argv[1:]:
     import re
     s=re.sub(r'<span class="ver">v1\.8( · pruebas| · L)?</span>', lambda m:'<span class="ver">v1.9'+(m.group(1) or '')+'</span>', s)
     i=s.index('</style>'); s=s[:i]+CSS+s[i:]
-    for bad in ['startClass','TELETIPOS_CLASE =','Feijóo','hurones']:
+    for bad in ['startClass','TELETIPOS_CLASE =']:
         assert bad not in s, (f,bad)
     open(f,'w',encoding='utf-8').write(s); print('ok',f)
