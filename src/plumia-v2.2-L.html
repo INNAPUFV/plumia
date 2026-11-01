@@ -718,7 +718,7 @@ mark{border-radius:0}
 <div class="app">
 <header class="top">
 <div class="brand">
-<div class="wordmark"><h1 aria-label="PlumIA"><svg class="p-nib" viewBox="0 0 46 108" aria-hidden="true" focusable="false"><path fill-rule="evenodd" d="M2 0H30C41 0 46 8 46 22V25C46 40 40 47 30 47H17V86L9.5 107L2 86Z M31 17.5a6.5 6.5 0 1 0 0.01 0Z M7.4 66H11.6L9.75 107H9.25Z"/></svg><span aria-hidden="true">lum<em>IA</em></span></h1><span class="ver">v2.1 · L</span></div>
+<div class="wordmark"><h1 aria-label="PlumIA"><svg class="p-nib" viewBox="0 0 46 108" aria-hidden="true" focusable="false"><path fill-rule="evenodd" d="M2 0H30C41 0 46 8 46 22V25C46 40 40 47 30 47H17V86L9.5 107L2 86Z M31 17.5a6.5 6.5 0 1 0 0.01 0Z M7.4 66H11.6L9.75 107H9.25Z"/></svg><span aria-hidden="true">lum<em>IA</em></span></h1><span class="ver">v2.2 · L</span></div>
 </div>
 <ol class="rail" id="rail" aria-label="Fases de la noticia"></ol>
 <div class="top-actions">
@@ -1474,7 +1474,7 @@ const count = (novice && s.max && state!=='empty' && state!=='placed' ? `<span c
 + (novice && state!=='empty' && !(s.id==='cuerpo' && S.video && S.phase==='fuente') ? `<button type="button" class="crit-link" data-rub="${s.id}">Criterios</button>` : '');
 let inner;
 if(state==='empty') inner = '';
-else if(s.id==='cuerpo') inner = `<div class="txt" contenteditable="true" spellcheck="true" data-slot="cuerpo" data-ph="${vNotes?'Escribe o pega aquí tus notas del vídeo: datos, cifras, nombres, cargos y declaraciones (las citas, entre comillas). Deja ya señaladas tus 5W dobles y el cómo, por ejemplo: QUIÉN: …, QUÉ: …':''}">${c.text ? (c.html || toParas(c.text)) : ''}</div>`;
+else if(s.id==='cuerpo') inner = `<div class="txt" contenteditable="true" spellcheck="true" data-slot="cuerpo" data-ph="${vNotes?'Escribe o pega aquí tus notas del vídeo: datos, cifras, nombres, cargos y declaraciones (las citas, entre comillas).':''}">${c.text ? (c.html || toParas(c.text)) : ''}</div>`;
 else inner = `<div class="txt" contenteditable="true" spellcheck="true" data-slot="${s.id}" data-ph="${esc(novice ? s.ph : 'Escribe aquí.')}">${esc(c.text)}</div>`;
 let actions='';
 const active = state==='draft' || state==='review' || (s.id==='cuerpo' && S.phase==='cuerpo' && !S.finalBody);
