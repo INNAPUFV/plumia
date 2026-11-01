@@ -1,0 +1,506 @@
+<title>PlumIA teaser</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+/*FONTS*/
+/* Teaser 16:9 · escenario fijo de 1920×1080 escalado al visor. Línea temporal determinista: render(t). */
+:root{
+  --y:#FDDA48; --ink:#0F1010; --st:#393836; --st2:#2B2A28; --mut:#676762; --line:#D9D9D3; --card:#F4F4F0; --pr:#FAFAF8; --w:#FFFFFF;
+  --f-dis:"Anton","Arial Narrow",sans-serif; --f-lab:"Montserrat","Arial",sans-serif; --f-txt:"Open Sans",Arial,sans-serif; --f-mono:"IBM Plex Mono","Courier New",monospace;
+  --w-valor:#ffe1ea; --w-quien:#dbe8ff; --w-que:#fff1c7; --w-como:#e3f5e9; --w-donde:#efe3ff; --w-cuando:#ffe6d2; --w-porque:#d9f3f6;
+  --k-valor:#d9466e; --k-quien:#3d73d9; --k-que:#c99700; --k-como:#2f8f58; --k-donde:#8256cf; --k-cuando:#d9702a; --k-porque:#21929f;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:#0b0b0b;color:var(--w);font-family:var(--f-txt);overflow:hidden;padding-left:max(0px,env(safe-area-inset-left,0px));padding-right:max(0px,env(safe-area-inset-right,0px))}
+#viewport{position:fixed;inset:0;display:grid;place-items:center;background:#0b0b0b}
+#stage{position:absolute;left:0;top:0;width:1920px;height:1080px;overflow:hidden;transform-origin:0 0;background:var(--st)}
+.sc{position:absolute;inset:0;opacity:0}
+.lab{font-family:var(--f-lab);font-weight:850;text-transform:uppercase;letter-spacing:.15em}
+.dis{font-family:var(--f-dis);font-weight:400;letter-spacing:.005em;line-height:1.04}
+[data-in]{opacity:0;will-change:opacity,transform}
+
+/* ---------- S1 · teletipo ---------- */
+#s1{background:var(--st2)}
+#s1 .bar{position:absolute;left:120px;top:96px;right:120px;display:flex;justify-content:space-between;align-items:center;border-bottom:2px solid #4a4946;padding-bottom:18px;color:var(--y);font-size:22px}
+#s1 .bar span:last-child{color:#BDBDB6;font-family:var(--f-mono);letter-spacing:.04em;text-transform:none;font-weight:500}
+#tty{position:absolute;left:120px;top:190px;width:1680px;font-family:var(--f-mono);font-size:40px;line-height:68px;color:#D9D9D3}
+#tty div{position:absolute;left:0;white-space:pre}
+#tty .cur{display:inline-block;width:22px;height:44px;background:var(--y);vertical-align:-8px;margin-left:4px}
+#s1 .say{position:absolute;left:120px;bottom:250px;font-size:104px;color:#fff;line-height:1.06}
+#s1 .say2{position:absolute;left:120px;bottom:60px;font-size:156px;color:var(--y);transform-origin:0 70%}
+#s1 .veil{position:absolute;inset:0;background:linear-gradient(180deg,rgba(43,42,40,0) 30%,rgba(43,42,40,.92) 70%);opacity:0}
+
+/* ---------- Marca ---------- */
+.wm{display:flex;align-items:flex-end;white-space:nowrap}
+.wm svg{height:1.08em;width:auto;margin-right:.03em;transform:translateY(.22em)}
+.wm .rest{font-family:var(--f-dis);line-height:.9}
+.wm em{font-style:normal}
+#s2{background:var(--st)}
+#s2 .wrap{position:absolute;left:0;right:0;top:300px;display:flex;flex-direction:column;align-items:center}
+#logo2{font-size:300px;color:#fff;position:relative}
+#logo2 svg{fill:var(--y)}
+#logo2 em{color:var(--y)}
+#logo2 .rest{display:inline-block;clip-path:inset(0 100% -20% 0)}
+#nibline{position:absolute;left:58px;height:10px;background:var(--y);top:calc(100% + 70px);width:0}
+#s2 .tag{margin-top:150px;font-size:34px;color:#fff}
+#s2 .tag2{margin-top:22px;font-size:40px;color:#D9D9D3;font-family:var(--f-txt)}
+
+/* ---------- S3 · tesis ---------- */
+#s3{background:var(--st2)}
+#s3 .words{position:absolute;left:140px;top:150px;display:flex;flex-direction:column;gap:26px}
+#s3 .wd{font-size:178px;color:#fff;line-height:.95;transform-origin:0 60%}
+#s3 .wd i{display:block;height:14px;background:var(--y);width:0;margin-top:14px}
+#s3 .side{position:absolute;left:1080px;top:300px;width:700px}
+#s3 .side p{margin:0 0 40px;font-size:44px;line-height:1.4;color:#E6E6E0}
+#s3 .side .dis{font-size:84px;color:var(--y);line-height:1.05}
+
+/* ---------- App (planos de recurso) ---------- */
+#s4{background:var(--card)}
+#ui{position:absolute;left:0;top:0;width:1920px;height:1080px;transform-origin:0 0;background:var(--card);color:var(--ink)}
+.hd{position:absolute;left:0;top:0;right:0;height:76px;background:var(--st);display:flex;align-items:center;padding:0 30px;gap:28px}
+.hd .wm{font-size:44px;color:#fff}
+.hd .wm svg{fill:var(--y)} .hd .wm em{color:var(--y)}
+.hd .ver{font-family:var(--f-lab);font-weight:850;font-size:13px;letter-spacing:.13em;color:var(--y);border:1.5px solid var(--y);padding:4px 9px;margin-left:6px;align-self:center}
+.rail{display:flex;align-items:center;margin:0 auto;gap:0}
+.rail .ph{display:flex;align-items:center;gap:9px;font-family:var(--f-lab);font-weight:850;font-size:15px;letter-spacing:.13em;text-transform:uppercase;color:rgba(255,255,255,.6)}
+.rail .ph + .ph::before{content:"";width:22px;height:1.5px;background:rgba(255,255,255,.3);margin:0 10px}
+.rail .dot{width:30px;height:30px;border-radius:50%;border:2px solid rgba(255,255,255,.45);display:grid;place-items:center;font-size:13px;color:rgba(255,255,255,.8)}
+.rail .ph.done .dot{background:var(--y);border-color:var(--y);color:var(--ink)}
+.rail .ph.now .dot{background:var(--y);border-color:var(--y);color:var(--ink);box-shadow:0 0 0 6px rgba(253,218,72,.22)}
+.rail .ph .lb{display:none}
+.rail .ph.now .lb{display:inline;color:var(--y)}
+.mode{display:flex;border:1.5px solid rgba(255,255,255,.35);padding:4px}
+.mode b{font-family:var(--f-txt);font-size:17px;padding:7px 15px;color:#E6E6E0;font-weight:700}
+.mode b.on{background:var(--y);color:var(--ink)}
+.hd .ghost{font-weight:700;font-size:18px;border:2px solid rgba(255,255,255,.6);color:#fff;padding:9px 18px}
+.prog{position:absolute;left:0;right:0;top:76px;height:6px;background:var(--st2)}
+.prog i{position:absolute;left:0;top:0;bottom:0;width:0;background:var(--y)}
+.chat{position:absolute;left:0;top:82px;bottom:0;width:770px;background:#fff;display:flex;flex-direction:column}
+.chead{display:flex;align-items:center;gap:16px;padding:18px 26px;border-bottom:2px solid var(--ink)}
+.av{width:48px;height:48px;background:var(--y);display:grid;place-items:center}
+.av svg{width:24px;height:24px;stroke:var(--ink);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.chead b{display:block;font-family:var(--f-lab);font-weight:850;font-size:16px;letter-spacing:.13em;text-transform:uppercase}
+.chead span{font-size:16px;color:var(--mut)}
+.chead span i{display:inline-block;width:9px;height:9px;border-radius:50%;background:#1f7a55;margin-right:7px}
+.msgs{position:relative;flex:1;overflow:hidden}
+.mi{position:absolute;left:0;right:0;top:0;padding:24px 26px;display:flex;flex-direction:column;gap:18px}
+.m{max-width:92%;font-size:21px;line-height:1.5}
+.m.ai{align-self:flex-start;background:var(--card);border-left:4px solid var(--y);padding:15px 19px}
+.m.me{align-self:flex-end;background:var(--ink);color:#fff;padding:15px 19px}
+.m p{margin:0 0 8px}.m p:last-child{margin:0}
+.ev{align-self:center;font-family:var(--f-lab);font-weight:850;font-size:13px;letter-spacing:.13em;text-transform:uppercase;padding:7px 14px;background:#e8f5ee;color:#1f7a55}
+.ev.ph{background:var(--st);color:#fff}
+.ev.ph::before{content:"";display:inline-block;width:9px;height:9px;background:var(--y);margin-right:9px}
+.typing{color:var(--mut);font-size:19px;display:flex;align-items:center;gap:12px}
+.typing i{display:inline-flex;gap:4px}.typing i b{width:8px;height:8px;border-radius:50%;background:var(--ink);opacity:.35}
+.tb{width:100%;border-collapse:collapse;font-size:17px;margin:4px 0 10px;background:#fff}
+.tb th{background:var(--card);text-align:left;padding:9px 11px;font-family:var(--f-lab);font-weight:850;font-size:13px;letter-spacing:.06em;border-bottom:3px solid var(--y);border:1px solid var(--line);border-bottom:3px solid var(--y)}
+.tb td{padding:9px 11px;border:1px solid var(--line);vertical-align:top}
+.code{display:inline-block;border:1.5px solid var(--st);padding:0 6px;font-family:var(--f-lab);font-weight:850;font-size:14px;margin-right:6px;background:#fff}
+.code.on{background:var(--y);border-color:var(--ink)}
+.comp{border-top:1px solid var(--line);padding:16px 22px 22px;display:flex;gap:12px}
+.comp .in{flex:1;border:1.5px solid var(--line);padding:13px 16px;font-size:19px;color:var(--mut)}
+.comp .send{width:52px;height:52px;background:var(--y);display:grid;place-items:center}
+.comp .send svg{width:22px;height:22px;stroke:var(--ink);fill:none;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.split{position:absolute;left:770px;top:82px;bottom:0;width:10px;background:var(--line)}
+.desk{position:absolute;left:780px;top:82px;right:0;bottom:0;overflow:hidden}
+.dbar{display:flex;align-items:center;gap:10px;padding:26px 40px 0 40px}
+.dbar .t{font-family:var(--f-lab);font-weight:850;font-size:15px;letter-spacing:.15em;color:var(--mut);margin-right:auto}
+.dbar b{font-size:17px;font-weight:700;border:2px solid var(--ink);padding:9px 16px;background:#fff}
+.dbar b.f{background:var(--st);border-color:var(--st);color:#fff}
+.sheet{margin:22px 40px 0;background:#fff;border:1px solid var(--line);border-top:6px solid var(--y);padding:34px 56px 60px}
+.mast{display:flex;justify-content:space-between;align-items:baseline;border-bottom:2px solid var(--ink);padding-bottom:12px;margin-bottom:22px}
+.mast .dis{font-size:44px}
+.mast .lab{font-size:14px;color:var(--mut)}
+.slot{position:relative;margin:0 0 10px;padding:10px 16px;border:1.5px dashed var(--line)}
+.slot .tg{display:flex;align-items:center;gap:10px;font-family:var(--f-lab);font-weight:850;font-size:14px;letter-spacing:.13em;text-transform:uppercase}
+.slot .tg::before{content:"";width:6px;height:15px;background:var(--line)}
+.slot .tx{display:none}
+.slot.placed{border-color:transparent;padding:8px 16px}
+.slot.placed .tg::before{background:var(--y)}
+.slot.placed .tx{display:block;margin-top:6px}
+.slot .lk{width:14px;height:14px;stroke:var(--mut);fill:none;stroke-width:2}
+.slot.placed .lk{display:none}
+.slot .sw{position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,transparent,rgba(253,218,72,.5) 45%,rgba(253,218,72,.5) 55%,transparent);transform:translateX(-100%);opacity:0}
+.stamp{position:absolute;right:16px;top:8px;font-family:var(--f-lab);font-weight:850;font-size:14px;letter-spacing:.13em;color:#1f7a55;border:2.5px solid #1f7a55;padding:3px 9px;transform:rotate(-6deg);background:#fff;opacity:0}
+#tx-ante{font-family:var(--f-lab);font-weight:850;font-size:18px;letter-spacing:.14em;text-transform:uppercase;color:var(--st)}
+#tx-tit{font-family:var(--f-dis);font-size:58px;line-height:1.07;color:var(--ink);text-wrap:balance}
+#tx-sub{font-size:25px;line-height:1.45;color:var(--st)}
+#tx-ent{font-size:22px;line-height:1.6;font-weight:700}
+.rule{height:1px;background:var(--line);margin:18px 0}
+.cuerpo .tg{margin-bottom:8px}
+.cuerpo{border-color:transparent}
+.cuerpo .tg::before{background:var(--y)}
+#body{font-size:23px;line-height:1.8;color:var(--ink)}
+#body::first-letter{font-family:var(--f-dis);float:left;font-size:3.4em;line-height:.86;padding:6px 10px 0 0}
+.w{background-repeat:no-repeat;background-size:0% 100%;padding:1px 0}
+.w.valor{background-image:linear-gradient(var(--w-valor),var(--w-valor))} .w.quien{background-image:linear-gradient(var(--w-quien),var(--w-quien))}
+.w.que{background-image:linear-gradient(var(--w-que),var(--w-que))} .w.como{background-image:linear-gradient(var(--w-como),var(--w-como))}
+.w.donde{background-image:linear-gradient(var(--w-donde),var(--w-donde))} .w.cuando{background-image:linear-gradient(var(--w-cuando),var(--w-cuando))}
+.w.porque{background-image:linear-gradient(var(--w-porque),var(--w-porque))}
+.seltool{position:absolute;background:var(--st);padding:10px;display:flex;flex-wrap:wrap;gap:6px;width:470px;opacity:0}
+.seltool .l{width:100%;font-family:var(--f-lab);font-weight:850;font-size:12px;letter-spacing:.13em;color:#BDBDB6;padding:0 4px 4px}
+.seltool b{font-size:15px;padding:6px 11px;color:var(--ink)}
+/* modal */
+.mod{position:absolute;inset:0;background:rgba(57,56,54,.78);opacity:0}
+.mbox{position:absolute;left:560px;top:150px;width:900px;background:#fff;border-top:6px solid var(--y)}
+.mhead{background:var(--st);padding:28px 34px 0;color:#fff}
+.mhead .lab{font-size:14px;color:var(--y)}
+.mhead .dis{font-size:52px;margin:6px 0 18px}
+.mtabs{display:flex;gap:6px}
+.mtabs span{font-family:var(--f-lab);font-weight:850;font-size:14px;letter-spacing:.12em;padding:12px 14px;color:#BDBDB6;border-bottom:4px solid transparent}
+.mtabs span.on{color:#fff;border-bottom-color:var(--y)}
+.mbody{padding:24px 34px 34px}
+.mbody h4{margin:0 0 14px;font-family:var(--f-lab);font-weight:850;font-size:15px;letter-spacing:.13em}
+.errs{display:flex;flex-direction:column;gap:10px}
+.errs div{position:relative;display:flex;gap:14px;align-items:flex-start;background:var(--card);padding:11px 14px;font-size:19px;line-height:1.45}
+.errs div b{flex:none;background:var(--st);color:#fff;font-family:var(--f-lab);font-weight:850;font-size:15px;padding:2px 9px;margin-top:2px}
+.errs div.sel{background:#FEEFB2;box-shadow:inset 0 0 0 2.5px var(--ink)}
+.errs div.sel b{background:var(--y);color:var(--ink)}
+.errs div.sel::after{content:"CRITERIO SEÑALADO";position:absolute;right:12px;top:-11px;background:var(--ink);color:var(--y);font-family:var(--f-lab);font-weight:850;font-size:12px;letter-spacing:.1em;padding:3px 9px}
+.cursor{position:absolute;width:34px;height:34px;opacity:0;z-index:30}
+.cursor svg{width:34px;height:34px}
+.ripple{position:absolute;width:70px;height:70px;margin:-35px 0 0 -35px;border-radius:50%;border:4px solid var(--y);opacity:0}
+
+/* rótulos de capítulo sobre el plano */
+.chap{position:absolute;left:80px;bottom:70px;width:820px;background:var(--st);border-top:6px solid var(--y);padding:26px 34px 30px;color:#fff;z-index:20}
+.chap .n{font-family:var(--f-dis);font-size:44px;color:var(--y);line-height:1}
+.chap .h{font-family:var(--f-dis);font-size:58px;line-height:1.05;margin:8px 0 12px}
+.chap .s{font-size:26px;line-height:1.45;color:#E6E6E0}
+.chap.r{left:auto;right:60px;width:620px}
+.legend{position:absolute;left:70px;top:130px;width:460px;background:var(--st);border-top:6px solid var(--y);padding:22px 26px;z-index:20}
+.legend .lab{font-size:18px;color:var(--y);margin-bottom:12px}
+.legend div.r{display:flex;align-items:center;gap:16px;font-family:var(--f-lab);font-weight:850;font-size:25px;letter-spacing:.08em;color:rgba(255,255,255,.4);padding:9px 0}
+.legend div.r i{width:30px;height:30px;flex:none;border:2px solid rgba(255,255,255,.3)}
+.legend div.r.on{color:#fff}
+
+/* ---------- S8 · principios ---------- */
+#s8{background:var(--st)}
+#s8 .big{position:absolute;left:140px;top:170px;font-size:150px;color:#fff;width:1640px}
+#s8 .row{position:absolute;left:140px;top:420px;display:flex;gap:56px}
+#s8 .row .dis{font-size:120px;color:#fff}
+#s8 .row .dis.y{color:var(--y)}
+#s8 .foot{position:absolute;left:140px;top:640px;font-size:46px;color:#E6E6E0;border-left:8px solid var(--y);padding-left:28px;line-height:1.35;width:1300px}
+
+/* ---------- S9 · valor ---------- */
+#s9{background:var(--card);color:var(--ink)}
+#s9 .ttl{position:absolute;left:120px;top:100px;font-size:96px;width:1680px}
+#s9 .grid{position:absolute;left:120px;top:290px;width:1680px;display:flex;flex-wrap:wrap;justify-content:center;gap:28px}
+#s9 .cd{width:541px}
+#s9 .cd{position:relative;background:#fff;border:1px solid var(--line);border-top:7px solid var(--line);padding:30px 34px 34px;min-height:300px}
+#s9 .cd::before{content:"";position:absolute;left:-1px;top:-7px;height:7px;width:calc(var(--bar,1) * (100% + 2px));background:var(--y)}
+#s9 .cd .lab{font-size:16px;color:var(--mut)}
+#s9 .cd .dis{font-size:54px;margin:12px 0 14px}
+#s9 .cd p{margin:0;font-size:27px;line-height:1.45;color:var(--st)}
+
+/* ---------- S10 · cierre ---------- */
+#s10{background:var(--y);color:var(--ink)}
+#s10 .wrap{position:absolute;left:0;right:0;top:250px;display:flex;flex-direction:column;align-items:center}
+#logo10{font-size:250px;color:var(--ink);position:relative}
+#logo10 svg{fill:var(--ink)}
+#nib10{position:absolute;left:48px;height:9px;background:var(--ink);top:calc(100% + 60px);width:0}
+#s10 .claim{margin-top:150px;font-size:86px;text-align:center}
+#s10 .lab{margin-top:28px;font-size:30px}
+#fade{position:absolute;inset:0;background:#000;opacity:0;pointer-events:none;z-index:99}
+
+/* controles (solo vista web) */
+#ctrl{position:fixed;left:max(16px,env(safe-area-inset-left,0px));bottom:16px;display:flex;gap:10px;align-items:center;z-index:100;font-family:var(--f-lab)}
+#ctrl button{font:850 13px/1 var(--f-lab);letter-spacing:.12em;text-transform:uppercase;background:var(--y);color:var(--ink);border:0;padding:11px 16px;cursor:pointer}
+#ctrl button:focus-visible{outline:3px solid #fff;outline-offset:2px}
+#ctrl span{color:#BDBDB6;font-size:12px;letter-spacing:.1em}
+body.rec #ctrl{display:none}
+@media (prefers-reduced-motion:reduce){#ctrl .hint{display:inline}}
+</style>
+
+<div id="viewport"><div id="stage">
+
+<!-- S1 · Teletipo -->
+<section class="sc" id="s1" data-scene="0,7.2">
+  <div class="bar lab"><span>Teletipo · Agencia</span><span>VALLADOLID · 09:42:17</span></div>
+  <div id="tty"></div>
+  <div class="veil" id="veil1"></div>
+  <div class="say dis" data-in="4.3" data-k="slam">Informar es dar forma a la realidad<br>a través de un relato.</div>
+  <div class="say2 dis" data-in="5.9" data-k="slam">La noticia.</div>
+</section>
+
+<!-- S2 · Marca -->
+<section class="sc" id="s2" data-scene="7.2,13.6">
+  <div class="wrap">
+    <div class="wm" id="logo2"><svg viewBox="0 0 46 108"><path fill-rule="evenodd" d="M2 0H30C41 0 46 8 46 22V25C46 40 40 47 30 47H17V86L9.5 107L2 86Z M31 17.5a6.5 6.5 0 1 0 0.01 0Z M7.4 66H11.6L9.75 107H9.25Z"/></svg><span class="rest">lum<em>IA</em></span><i id="nibline"></i></div>
+    <div class="tag lab" data-in="9.4">Un copiloto de redacción potenciado con IA</div>
+    <div class="tag2" data-in="10.2">Para quienes van a contar lo que pasa en el mundo.</div>
+  </div>
+</section>
+
+<!-- S3 · Tesis -->
+<section class="sc" id="s3" data-scene="13.6,21">
+  <div class="words">
+    <div class="wd dis" data-in="13.9" data-k="slam">Escribir.<i></i></div>
+    <div class="wd dis" data-in="14.7" data-k="slam">Corregir.<i></i></div>
+    <div class="wd dis" data-in="15.5" data-k="slam">Decidir.<i></i></div>
+  </div>
+  <div class="side">
+    <p data-in="16.6">El oficio del periodista se aprende escribiendo, recibiendo correcciones precisas y volviendo a escribir.</p>
+    <div class="dis" data-in="17.9">PlumIA sienta a cada estudiante junto a un editor.</div>
+  </div>
+</section>
+
+<!-- S4–S7 · Planos de la app -->
+<section class="sc" id="s4" data-scene="21,58.6">
+<div id="ui">
+  <div class="hd">
+    <div class="wm"><svg viewBox="0 0 46 108"><path fill-rule="evenodd" d="M2 0H30C41 0 46 8 46 22V25C46 40 40 47 30 47H17V86L9.5 107L2 86Z M31 17.5a6.5 6.5 0 1 0 0.01 0Z M7.4 66H11.6L9.75 107H9.25Z"/></svg><span class="rest">lum<em>IA</em></span></div>
+    <span class="ver">V1.9</span>
+    <div class="rail" id="rail"></div>
+    <div class="mode"><b class="on">Principiante</b><b>Experto</b></div>
+    <div class="ghost">Empezar de nuevo</div>
+  </div>
+  <div class="prog"><i id="progFill"></i></div>
+  <div class="chat">
+    <div class="chead"><div class="av"><svg viewBox="0 0 24 24"><path d="M4 20h4L19 9l-4-4L4 16v4z"/><path d="M13.5 6.5l4 4"/></svg></div><div><b>Tu copiloto de redacción</b><span><i></i>Editor potenciado con IA</span></div></div>
+    <div class="msgs"><div class="mi" id="mi">
+      <div class="m ai" data-m="21"><p>Teletipo recibido, pero revuelto: párrafos descolocados y sin separar. Está en el lienzo.</p><p><b>Léelo y responde «ya».</b></p></div>
+      <div class="ev" data-m="21">✓ Teletipo colocado en el lienzo</div>
+      <div class="m me" data-m="26.4">ya</div>
+      <div class="ev ph" data-m="26.8">Fase 2 · 5W</div>
+      <div class="m ai" data-m="29.9"><p>Antes de nada: ¿a quién afecta lo que ha pasado? Marca en el texto las W del hecho principal.</p><p><b>Escríbelas una a una.</b></p></div>
+      <div class="ev ph" data-m="39.1">Fase 3 · Entradilla</div>
+      <div class="m ai" data-m="39.3"><p>Las W del hecho principal están bien identificadas.</p><p><b>Escribe la entradilla.</b></p></div>
+      <div class="m me" data-m="40" id="typeEnt"></div>
+      <div class="typing" data-m="42.8" data-out="43.7"><i><b></b><b></b><b></b></i>Revisando con la rúbrica…</div>
+      <div class="m ai" data-m="43.7" id="corr"><table class="tb"><tr><th>Tu texto</th><th>Versión corregida</th><th>Criterio</th></tr>
+        <tr><td>ha puesto en marcha</td><td>puso en marcha</td><td><span class="code">U6</span>Pretérito perfecto simple</td></tr>
+        <tr><td>—</td><td>con seis autobuses eléctricos</td><td><span class="code" id="codeE2">E2</span>Falta el cómo</td></tr></table>
+        <p><b>Compara y responde «ok». Rectifícame si no estás de acuerdo.</b></p></div>
+      <div class="m me" data-m="49.4">ok</div>
+      <div class="ev" data-m="50.9">✓ Pieza colocada: Entradilla</div>
+      <div class="ev" data-m="52.3">✓ Pieza colocada: Titular</div>
+      <div class="ev" data-m="53.7">✓ Pieza colocada: Subtítulo</div>
+      <div class="ev" data-m="55.0">✓ Pieza colocada: Antetítulo</div>
+    </div></div>
+    <div class="comp"><div class="in">Escribe tu respuesta…</div><div class="send"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div></div>
+  </div>
+  <div class="split"></div>
+  <div class="desk">
+    <div class="dbar"><span class="t">Lienzo de trabajo</span><b>Rúbrica</b><b>Vista publicada</b><b>Copiar noticia</b><b>Informe</b><b class="f">Guardar</b></div>
+    <div class="sheet" id="sheet">
+      <div class="mast"><span class="dis">La Gaceta del Aula</span><span class="lab">Edición de práctica</span></div>
+      <div class="slot" id="sl-ante"><div class="tg">Antetítulo <svg class="lk" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 018 0v3"/></svg></div><div class="tx" id="tx-ante">Movilidad universitaria</div><i class="sw"></i><span class="stamp">Colocado</span></div>
+      <div class="slot" id="sl-tit"><div class="tg">Titular <svg class="lk" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 018 0v3"/></svg></div><div class="tx" id="tx-tit">El Ayuntamiento de Valladolid estrena un autobús nocturno gratuito para universitarios</div><i class="sw"></i><span class="stamp">Colocado</span></div>
+      <div class="slot" id="sl-sub"><div class="tg">Subtítulo <svg class="lk" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 018 0v3"/></svg></div><div class="tx" id="tx-sub">Seis vehículos eléctricos unen los tres campus con el centro las noches de jueves a sábado</div><i class="sw"></i><span class="stamp">Colocado</span></div>
+      <div class="slot" id="sl-ent"><div class="tg">Entradilla <svg class="lk" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 018 0v3"/></svg></div><div class="tx" id="tx-ent">El Ayuntamiento de Valladolid puso en marcha una línea de autobús nocturno gratuita para universitarios, con seis autobuses eléctricos que unirán desde el 9 de octubre los tres campus con el centro, para reducir los atropellos de los fines de semana.</div><i class="sw"></i><span class="stamp">Colocado</span></div>
+      <div class="rule"></div>
+      <div class="slot cuerpo" id="sl-cue"><div class="tg">Cuerpo de la noticia</div>
+        <div id="body">La iniciativa responde al <span class="w porque" data-w="32.0">aumento de los atropellos</span> y de los viajes en vehículos sin licencia durante las noches de fin de semana. «Ningún estudiante debería elegir entre volver andando solo o subir al coche de un desconocido», explicó Ortega. Según la Policía Municipal, <span class="w valor" data-w="36.5">23 jóvenes resultaron heridos</span> el curso pasado en accidentes nocturnos. La nueva línea, denominada Búho U, cuenta con <span class="w como" data-w="34.4">seis autobuses eléctricos</span> que recorren 14 paradas cada 20 minutos. <span class="w quien" data-w="33.0">El Ayuntamiento de Valladolid</span> <span class="w que" data-w="33.7">puso en marcha una línea de autobús nocturno gratuita para estudiantes universitarios</span>, la primera de este tipo en Castilla y León, según informó el concejal de Movilidad, Javier Ortega. El trayecto une <span class="w donde" data-w="35.1">los tres campus de la Universidad de Valladolid</span> con la plaza Mayor y la estación de autobuses. El servicio funcionará las noches de jueves, viernes y sábado, <span class="w cuando" data-w="35.8">desde el 9 de octubre de 2026</span>. El proyecto cuenta con un presupuesto de 487.350 euros, financiado en un 60 % por la Junta de Castilla y León.</div>
+      </div>
+    </div>
+  </div>
+  <div class="seltool" id="seltool"><div class="l">MARCAR COMO</div><b style="background:var(--w-valor)">Valor humano</b><b style="background:var(--w-quien)">Quién</b><b style="background:var(--w-que)">Qué</b><b style="background:var(--w-como)">Cómo</b><b style="background:var(--w-donde)">Dónde</b><b style="background:var(--w-cuando)">Cuándo</b><b style="background:var(--w-porque)" id="selPq">Por qué</b></div>
+  <div class="mod" id="mod"><div class="mbox">
+    <div class="mhead"><div class="lab">Rúbrica de la asignatura</div><div class="dis">Elementos de la noticia</div>
+      <div class="mtabs"><span>TITULAR</span><span>SUBTÍTULO</span><span>ANTETÍTULO</span><span class="on">ENTRADILLA</span><span>CUERPO</span><span>ESTILO (UNIDAD 4)</span></div></div>
+    <div class="mbody"><h4>ERRORES COMUNES</h4><div class="errs">
+      <div><b>E1</b>Interpretación explícita del periodista con adjetivos calificativos y sin una información que la justifique.</div>
+      <div class="sel" id="selE2"><b>E2</b>No incluye alguna de las 5 W dobles expresadas en la cabeza de titulación.</div>
+      <div><b>E3</b>Falta de coherencia con el contenido informativo de la cabeza de titulación.</div>
+      <div><b>E4</b>Opiniones explícitas del periodista (puntúan negativamente).</div>
+      <div><b>E5</b>Faltan comillas en afirmaciones relevantes que parecen proceder de una fuente.</div>
+    </div></div>
+  </div></div>
+  <div class="cursor" id="cursor"><svg viewBox="0 0 24 24"><path d="M4 2l15 11-7 1.2L8.5 21z" fill="#0F1010" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"/></svg></div>
+  <div class="ripple" id="ripple"></div>
+</div>
+  <div class="legend" data-in="32.5" data-out="37.5"><div class="lab">El hecho principal</div>
+    <div class="r" data-l="36.5"><i style="background:var(--w-valor)"></i>Valor humano</div>
+    <div class="r" data-l="33.0"><i style="background:var(--w-quien)"></i>Quién</div>
+    <div class="r" data-l="33.7"><i style="background:var(--w-que)"></i>Qué</div>
+    <div class="r" data-l="34.4"><i style="background:var(--w-como)"></i>Cómo</div>
+    <div class="r" data-l="35.1"><i style="background:var(--w-donde)"></i>Dónde</div>
+    <div class="r" data-l="35.8"><i style="background:var(--w-cuando)"></i>Cuándo</div>
+    <div class="r" data-l="32.0"><i style="background:var(--w-porque)"></i>Por qué</div>
+  </div>
+  <div class="chap" data-in="21.4" data-out="26.9"><div class="n">01</div><div class="h">La información llega desordenada</div><div class="s">Hay que leerla como un editor de noticias antes de empezar a escribir.</div></div>
+  <div class="chap" data-in="29.6" data-out="37.5"><div class="n">02</div><div class="h">El redactor debe identificar el hecho principal</div><div class="s">Las 5W y el valor humano afectado por las consecuencias del acontecimiento.</div></div>
+  <div class="chap r" data-in="38.4" data-out="45.7"><div class="n">03</div><div class="h">PlumIA corrige con la rúbrica</div><div class="s">Cada observación cita el criterio establecido por el profesor.</div></div>
+  <div class="chap" data-in="49.55" data-out="50.4"><div class="n">04</div><div class="h">La noticia, pieza a pieza</div><div class="s">Entradilla, cabeza de titulación y cuerpo de la noticia se colocan en el periódico cuando están bien.</div></div>
+</section>
+
+<!-- S8 · Principios -->
+<section class="sc" id="s8" data-scene="58.6,65.2">
+  <div class="big dis" data-in="59.0" data-k="slam">PlumIA no escribe por ti.</div>
+  <div class="row"><div class="dis" data-in="60.3" data-k="slam">Pregunta.</div><div class="dis" data-in="60.9" data-k="slam">Corrige.</div><div class="dis y" data-in="61.5" data-k="slam">Tú decides.</div></div>
+  <div class="foot" data-in="62.6">El estudiante redacta cada pieza y puede rectificar al copiloto. Y PlumIA no pone notas: la evaluación sigue siendo del profesor.</div>
+</section>
+
+<!-- S9 · Valor -->
+<section class="sc" id="s9" data-scene="65.2,72.6">
+  <div class="ttl dis" data-in="65.4">Pensado para aprender a contar noticias</div>
+  <div class="grid">
+    <div class="cd" data-in="66.0"><div class="dis">Ejercicios ilimitados</div><p>Cada práctica, un nuevo acontecimiento.</p></div>
+    <div class="cd" data-in="66.7"><div class="dis">Principiante o experto</div><p>La ayuda de la IA cambia en cada nivel.</p></div>
+    <div class="cd" data-in="67.4"><div class="lab">Para aprender</div><div class="dis">Rúbrica a la vista</div><p>Cada código de la corrección abre su criterio.</p></div>
+    <div class="cd" data-in="68.1"><div class="lab">Para el alumno y para el profesor</div><div class="dis">Informe final del ejercicio</div><p>PlumIA registra toda la interacción del alumno con el copiloto para analizar su evolución en el aprendizaje.</p></div>
+    <div class="cd" data-in="68.8"><div class="lab">Para empezar ya</div><div class="dis">En Gemini</div><p>Con la cuenta de la universidad. Sin instalar nada.</p></div>
+  </div>
+</section>
+
+<!-- S10 · Cierre -->
+<section class="sc" id="s10" data-scene="72.6,80.5">
+  <div class="wrap">
+    <div class="wm" id="logo10"><svg viewBox="0 0 46 108"><path fill-rule="evenodd" d="M2 0H30C41 0 46 8 46 22V25C46 40 40 47 30 47H17V86L9.5 107L2 86Z M31 17.5a6.5 6.5 0 1 0 0.01 0Z M7.4 66H11.6L9.75 107H9.25Z"/></svg><span class="rest">lum<em>IA</em></span><i id="nib10"></i></div>
+    <div class="claim dis" data-in="74.4">Aprende el oficio con un editor a tu lado.</div>
+    <div class="lab" data-in="75.4">Tu copiloto de redacción potenciado por IA</div>
+  </div>
+</section>
+<div id="fade"></div>
+</div></div>
+<div id="ctrl"><button type="button" id="play">Reproducir</button><span id="clock">0:00</span></div>
+
+<script>
+const SDUR = 80.5;
+/* pausas de lectura: [instante de la historia, segundos congelados] */
+const HOLDS = [[5.3,1.6],[6.5,0.8],[17.2,3.0],[18.6,2.2],[21.95,2.6],[30.15,2.6],[31.2,1.0],[37.0,1.2],[38.95,2.4],[44.5,2.2],[46.7,2.2],[50.1,3.3],[57.6,1.2],[63.3,3.2],[66.7,3.4],[67.4,3.4],[68.1,3.6],[68.8,4.4],[69.5,1.0]];
+const DUR = SDUR + HOLDS.reduce((a,h)=>a+h[1],0);
+function warp(T){ let sh=0; for(const [h,d] of HOLDS){ if(T < h+sh) break; if(T < h+sh+d) return h; sh+=d; } return T-sh; }
+const fmt = x => `${Math.floor(x/60)}:${String(Math.floor(x%60)).padStart(2,'0')}`;
+const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
+const cl = (x,a=0,b=1) => Math.min(b,Math.max(a,x));
+const io = x => x<.5 ? 4*x*x*x : 1-Math.pow(-2*x+2,3)/2;
+const eo = x => 1-Math.pow(1-x,3);
+const pr = (t,t0,d) => cl((t-t0)/d);
+const lerp = (a,b,k) => a+(b-a)*k;
+
+/* --- S1: teletipo que se escribe y luego se revuelve --- */
+const TTY = [
+ 'VALLADOLID, 9 OCT. (AGENCIA) —',
+ 'El Ayuntamiento de Valladolid puso en marcha una línea',
+ 'de autobús nocturno gratuita para universitarios, la primera',
+ 'de este tipo en Castilla y León. Seis autobuses eléctricos',
+ 'recorren 14 paradas cada 20 minutos. Según la Policía Municipal,',
+ '23 jóvenes resultaron heridos el curso pasado en accidentes',
+ 'nocturnos. El proyecto cuenta con 487.350 euros de presupuesto.'
+];
+const SHUF = [4,2,6,0,5,1,3];
+const tty = $('#tty'); TTY.forEach(()=>{ const d=document.createElement('div'); tty.appendChild(d); });
+function s1(t){
+  const rows = tty.children, cps = 150;
+  let start = 0.35;
+  TTY.forEach((line,i)=>{
+    const t0 = start + i*0.5, n = Math.floor(cl((t-t0)*cps/1, 0, line.length));
+    const typing = t>=t0 && n<line.length;
+    rows[i].innerHTML = line.slice(0,n).replace(/</g,'&lt;') + (typing ? '<span class="cur"></span>' : '');
+    const k = io(pr(t,3.6,0.9));
+    const y0 = i*68, y1 = SHUF[i]*68;
+    rows[i].style.top = lerp(y0,y1,k)+'px';
+    rows[i].style.left = (Math.sin(i*1.7)*90*k)+'px';
+    rows[i].style.opacity = lerp(1,.55,k);
+  });
+  $('#veil1').style.opacity = io(pr(t,4.0,.8));
+}
+
+/* --- S2/S10: la plumilla escribe la marca --- */
+function logo(t, t0, sel, line){
+  const L = $(sel), P = L.querySelector('svg'), R = L.querySelector('.rest'), N = $(line);
+  const a = pr(t,t0,.55);
+  P.style.transform = `translateY(calc(.22em + ${(1-eo(a))*-260}px))`; P.style.opacity = cl(a*3);
+  const w = io(pr(t,t0+.5,.9));
+  N.style.width = (w * (L.offsetWidth-60)) + 'px';
+  R.style.clipPath = `inset(0 ${100-w*100}% -20% 0)`;
+}
+
+/* --- App: cámara, carriles, mensajes, piezas --- */
+const PH = ['Teletipo','5W','Entradilla','Titular','Subtítulo','Antetítulo','Cuerpo','Revisión'];
+$('#rail').innerHTML = PH.map((p,i)=>`<div class="ph"><span class="dot">${i+1}</span><span class="lb">${p}</span></div>`).join('');
+function phaseAt(t){ return t<39.1?1 : t<51.1?2 : t<52.6?3 : t<54.0?4 : t<55.3?5 : 6; }
+function rail(t){ const k=phaseAt(t); $$('#rail .ph').forEach((e,i)=>{ e.className='ph'+(i<k?' done':i===k?' now':''); e.querySelector('.dot').textContent = i<k?'✓':i+1; }); }
+const PLACED = [['sl-ent',50.9],['sl-tit',52.3],['sl-sub',53.7],['sl-ante',55.0]];
+function slots(t){
+  let n=1;
+  PLACED.forEach(([id,t0])=>{ const s=$('#'+id); const on=t>=t0; s.classList.toggle('placed',on); if(on) n++;
+    const sw=s.querySelector('.sw'), st=s.querySelector('.stamp'), a=pr(t,t0,1.1);
+    sw.style.opacity = on && a<1 ? 1 : 0; sw.style.transform=`translateX(${lerp(-100,100,io(a))}%)`;
+    const b = pr(t,t0+.25,.35); st.style.opacity = on ? cl(b*2) * (1-pr(t,t0+2.6,.4)) : 0; st.style.transform = `rotate(-6deg) scale(${lerp(1.8,1,eo(b))})`;
+  });
+  $('#progFill').style.width = (lerp(0,1,1) * (n/5)*100)+'%';
+}
+const ENT = 'El Ayuntamiento de Valladolid ha puesto en marcha una línea de autobús nocturno gratuita para universitarios, que unirá desde el 9 de octubre los tres campus con el centro, para reducir los atropellos de los fines de semana.';
+function chat(t){
+  $$('#mi [data-m]').forEach(e=>{ const t0=+e.dataset.m, t1=e.dataset.out?+e.dataset.out:1e9; const on=t>=t0&&t<t1; e.style.display=on?'':'none'; const a=pr(t,t0,.35); e.style.opacity=on?a:0; e.style.transform=`translateY(${(1-eo(a))*14}px)`; });
+  const n = Math.floor(cl((t-40)*92,0,ENT.length)); $('#typeEnt').textContent = ENT.slice(0,n) + (t>=40 && n<ENT.length ? '▍' : '');
+  const box=$('.msgs'), mi=$('#mi'); const over=Math.max(0, mi.scrollHeight-box.clientHeight);
+  mi.style.transform=`translateY(${-over}px)`;
+  $('#codeE2').classList.toggle('on', t>=45.6);
+}
+function marks(t){
+  $$('#body .w').forEach(e=>{ const a=io(pr(t,+e.dataset.w,.5)); e.style.backgroundSize=(a*100)+'% 100%'; });
+  $$('.legend .r').forEach(e=>e.classList.toggle('on', t>=+e.dataset.l+.3));
+  const st=$('#seltool'), q=$('#body .w.porque'); const a=pr(t,30.6,.3)*(1-pr(t,32.05,.3));
+  q.style.backgroundColor = (t>=30.4 && t<32.05) ? '#cfe0ff' : '';
+  $('#selPq').style.boxShadow = (t>=31.55 && t<32.3) ? 'inset 0 0 0 3px #0F1010' : '';
+  if(a>0){ const r=q.getBoundingClientRect(), u=$('#ui').getBoundingClientRect(), sc=u.width/1920; st.style.left=((r.left-u.left)/sc)+'px'; st.style.top=((r.bottom-u.top)/sc+10)+'px'; }
+  st.style.opacity=a;
+}
+function modal(t){
+  const a=pr(t,45.9,.35)*(1-pr(t,49.0,.35)); const m=$('#mod'); m.style.opacity=a; m.querySelector('.mbox').style.transform=`translateY(${(1-eo(pr(t,45.9,.45)))*40}px)`;
+  const s=$('#selE2'), h=pr(t,46.5,.8); s.style.transform=`scale(${1+Math.sin(h*Math.PI)*.03})`;
+}
+function cursor(t){
+  const c=$('#cursor'), rp=$('#ripple');
+  const a=pr(t,44.7,.3)*(1-pr(t,46.4,.3)); c.style.opacity=a;
+  if(a>0){ const tgt=$('#codeE2').getBoundingClientRect(), u=$('#ui').getBoundingClientRect(), sc=u.width/1920;
+    const tx=(tgt.left-u.left)/sc+18, ty=(tgt.top-u.top)/sc+12; const k=io(pr(t,44.7,.8));
+    c.style.left=lerp(tx+260,tx,k)+'px'; c.style.top=lerp(ty+180,ty,k)+'px';
+    rp.style.left=(tx+4)+'px'; rp.style.top=(ty+4)+'px'; }
+  const r=pr(t,45.55,.5); rp.style.opacity= t>=45.55 && r<1 ? 1-r : 0; rp.style.transform=`scale(${.3+r})`;
+}
+/* cámara: [t, cx, cy, escala] en coordenadas de la interfaz */
+const CAM = [[21,1340,780,1.75],[22.2,1340,760,1.6],[24.8,960,540,1],[27.4,960,540,1],[29.6,1360,770,1.45],[37.6,1360,800,1.45],[38.4,560,640,1.4],[43.6,560,620,1.4],[44.4,560,700,1.6],[44.7,560,700,1.6],[45.9,1000,560,1.12],[48.9,1000,560,1.12],[49.9,1350,470,1.32],[55.9,1350,470,1.32],[57.5,960,540,1],[58.6,960,540,.97]];
+function cam(t){
+  let i=0; while(i<CAM.length-2 && t>CAM[i+1][0]) i++;
+  const A=CAM[i], B=CAM[i+1]; const k=io(cl((t-A[0])/(B[0]-A[0])));
+  const s=lerp(A[3],B[3],k), cx=lerp(A[1],B[1],k), cy=lerp(A[2],B[2],k);
+  $('#ui').style.transform=`translate(${960-cx*s}px,${540-cy*s}px) scale(${s})`;
+}
+
+/* --- genérico: entradas con data-in / data-out --- */
+function generic(t){
+  $$('[data-in]').forEach(e=>{
+    const t0=+e.dataset.in, t1=e.dataset.out?+e.dataset.out:1e9, k=e.dataset.k||'up';
+    const a=pr(t,t0,k==='slam'?.28:.55), b=1-pr(t,t1,.35); const v=a*b;
+    e.style.opacity=v;
+    if(e.classList.contains('cd')){
+      const c=pr(t,t0,.6); e.style.opacity=Math.min(1,c*1.8)*b; e.style.transform=`translateY(${(1-eo(c))*70}px) scale(${lerp(.95,1,eo(c))})`;
+      e.style.setProperty('--bar', io(pr(t,t0+.15,.55)));
+      [...e.children].forEach((ch,i)=>{ const d=pr(t,t0+.25+i*.08,.4); ch.style.opacity=d; ch.style.transform=`translateY(${(1-eo(d))*16}px)`; });
+      return;
+    }
+    if(k==='slam') e.style.transform=`scale(${lerp(e.classList.contains('say2')?1.45:1.14,1,eo(a))})`;
+    else e.style.transform=`translateY(${(1-eo(a))*34}px)`;
+    const bar=e.querySelector(':scope > i'); if(bar && e.classList.contains('wd')) bar.style.width = (io(pr(t,t0+.15,.5))*100)+'%';
+  });
+}
+function scenes(t){
+  $$('.sc').forEach(s=>{ const [a,b]=s.dataset.scene.split(',').map(Number); const v=pr(t,a,.4)*(1-pr(t,b-.4,.4)); s.style.opacity=v; s.style.visibility=v>0?'visible':'hidden'; });
+}
+function render(T){
+  const t = warp(T);
+  scenes(t); $('#fade').style.opacity = pr(T,DUR-.7,.7); generic(t);
+  if(t<7.6) s1(t);
+  if(t>7 && t<14) logo(t,7.5,'#logo2','#nibline');
+  if(t>20.5 && t<59){ cam(t); rail(t); slots(t); chat(t); marks(t); modal(t); cursor(t); }
+  if(t>72) logo(t,72.9,'#logo10','#nib10');
+  $('#clock').textContent=`${fmt(T)} / ${fmt(DUR)}`;
+}
+window.render = render; window.DUR = DUR;
+
+/* --- vista web: escalado y reproducción --- */
+function fit(){ const st=$('#stage'), vw=innerWidth, vh=innerHeight, k=Math.min(vw/1920, vh/1080); st.style.transform=`scale(${k})`; st.style.left=((vw-1920*k)/2)+'px'; st.style.top=((vh-1080*k)/2)+'px'; }
+let playing=false, t0=0, tNow=0;
+function loop(ts){ if(!playing) return; tNow=(ts-t0)/1000; if(tNow>=DUR){ tNow=DUR; playing=false; $('#play').textContent='Volver a ver'; } render(tNow); requestAnimationFrame(loop); }
+function play(){ if(tNow>=DUR) tNow=0; playing=true; t0=performance.now()-tNow*1000; $('#play').textContent='Pausa'; requestAnimationFrame(loop); }
+$('#play').onclick=()=>{ if(playing){ playing=false; $('#play').textContent='Reproducir'; } else play(); };
+if(window.__REC){ document.body.classList.add('rec'); } else { addEventListener('resize',fit); fit();
+  document.fonts && document.fonts.ready.then(()=>{ render(0.0001); const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches; if(reduce){ tNow=DUR-2; render(tNow); } else play(); });
+}
+</script>

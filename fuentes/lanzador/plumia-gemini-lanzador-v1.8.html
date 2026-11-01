@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PlumIA</title>
+<style>body{margin:0;font-family:Arial,sans-serif;background:#F4F4F0;color:#0F1010}#plumia-carga{display:grid;place-items:center;min-height:100vh;text-align:center;padding:24px}#plumia-carga b{display:block;font-size:1.4rem;margin-bottom:6px}#plumia-diag{font-size:12px;color:#676762;margin-top:10px;white-space:pre-line}</style>
+</head>
+<body>
+<div id="plumia-carga"><div><b>PlumIA</b><span id="plumia-msg">Cargando la redacción…</span><div id="plumia-diag"></div></div></div>
+<script>
+/* PlumIA · lanzador para el Canvas de Gemini (v1.8 · L). La aplicación está en el repositorio INNAPUFV/plumia. */
+(async () => {
+const PLUMIA_JS = ['https://cdn.jsdelivr.net/gh/INNAPUFV/plumia@main/plumia.js', 'https://innapufv.github.io/plumia/plumia.js'];
+const PLUMIA_HTML = ['https://innapufv.github.io/plumia/plumia.html', 'https://cdn.jsdelivr.net/gh/INNAPUFV/plumia@main/plumia.html'];
+const diag = [];
+const cargarScript = src => new Promise((ok, ko) => { const s = document.createElement('script'); s.src = src; s.onload = ok; s.onerror = () => ko(new Error('bloqueado o no encontrado')); document.head.appendChild(s); });
+async function obtenerApp() {
+  for (const u of PLUMIA_JS) {
+    try { await cargarScript(u + '?t=' + Date.now()); if (window.__PLUMIA_HTML) return window.__PLUMIA_HTML; diag.push('script ' + u + ': vacío'); }
+    catch (e) { diag.push('script ' + u + ': ' + e.message); }
+  }
+  for (const u of PLUMIA_HTML) {
+    try { const r = await fetch(u + '?t=' + Date.now(), { cache: 'no-store' }); if (!r.ok) throw new Error('HTTP ' + r.status); return await r.text(); }
+    catch (e) { diag.push('fetch ' + u + ': ' + e.message); }
+  }
+  throw new Error('sin acceso');
+}
+  try {
+    const app = new DOMParser().parseFromString(await obtenerApp(), 'text/html');
+    document.title = app.title || 'PlumIA';
+    app.head.querySelectorAll('link,style').forEach(n => document.head.appendChild(document.importNode(n, true)));
+    const scripts = [...app.body.querySelectorAll('script')];
+    scripts.forEach(s => s.remove());
+    document.body.innerHTML = app.body.innerHTML;
+    for (const s of scripts) {
+      const n = document.createElement('script');
+      for (const a of s.attributes) n.setAttribute(a.name, a.value);
+      if (s.src) await new Promise(ok => { n.onload = n.onerror = ok; document.body.appendChild(n); });
+      else { n.textContent = s.textContent; document.body.appendChild(n); }
+    }
+  } catch (e) {
+    document.getElementById('plumia-msg').textContent = 'No se ha podido cargar PlumIA.';
+    document.getElementById('plumia-diag').textContent = diag.join('\n');
+  }
+})();
+</script>
+</body>
+</html>
