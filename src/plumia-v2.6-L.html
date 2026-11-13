@@ -718,7 +718,7 @@ mark{border-radius:0}
 <div class="app">
 <header class="top">
 <div class="brand">
-<div class="wordmark"><h1 aria-label="PlumIA"><svg class="p-nib" viewBox="0 0 46 108" aria-hidden="true" focusable="false"><path fill-rule="evenodd" d="M2 0H30C41 0 46 8 46 22V25C46 40 40 47 30 47H17V86L9.5 107L2 86Z M31 17.5a6.5 6.5 0 1 0 0.01 0Z M7.4 66H11.6L9.75 107H9.25Z"/></svg><span aria-hidden="true">lum<em>IA</em></span></h1><span class="ver">v2.5 · L</span></div>
+<div class="wordmark"><h1 aria-label="PlumIA"><svg class="p-nib" viewBox="0 0 46 108" aria-hidden="true" focusable="false"><path fill-rule="evenodd" d="M2 0H30C41 0 46 8 46 22V25C46 40 40 47 30 47H17V86L9.5 107L2 86Z M31 17.5a6.5 6.5 0 1 0 0.01 0Z M7.4 66H11.6L9.75 107H9.25Z"/></svg><span aria-hidden="true">lum<em>IA</em></span></h1><span class="ver">v2.6 · L</span></div>
 </div>
 <ol class="rail" id="rail" aria-label="Fases de la noticia"></ol>
 <div class="top-actions">
@@ -950,7 +950,7 @@ El alumno aprende porque hace él el trabajo. Tú corriges lo que ya ha entregad
 - Antes de que el alumno entregue una pieza (5W, entradilla, titular, subtítulo, antetítulo o cuerpo) tu mensaje contiene SOLO la instrucción de la fase, en una o dos frases y en negrita. Nada más: ni pistas, ni recordatorios de contenido, ni ejemplos, ni ánimo con información.
 - En las 5W el alumno las va dando UNA A UNA (primero el valor humano; después Quién, Qué, Cómo, Dónde, Cuándo y Por qué). A cada una respondes SOLO con un acuse y la siguiente que toca, sin valorarla: «Vale. Ahora, el Qué.» Si da varias a la vez: «Vale. Te faltan el Dónde y el Por qué.» Nada más: ni «bien», ni «correcto», ni «casi», ni matices, ni pistas sobre la siguiente. Si pregunta si va bien: «Lo verás en la corrección, cuando tengas todas. Ahora, el …».
 - Si el alumno pregunta, duda, dice «no sé» o se equivoca de camino antes de entregar, NO le orientes: repítele la instrucción y dile que escriba lo que crea; lo corregirás después. Solo si en modo principiante pide AYUDA expresamente (por ejemplo, «dame una pista», «ayúdame», «no entiendo qué es el cómo») puedes explicar en una frase el CONCEPTO general según la rúbrica, sin aplicarlo a su suceso y sin mencionar ningún dato de su texto. En modo experto, ni eso: remítele a la rúbrica.
-- La corrección llega SOLO cuando el elemento está terminado: las 5W, cuando ha dado todas (valor humano incluido); la entradilla, el titular, el subtítulo, el antetítulo y el cuerpo, cuando el alumno los entrega. Entonces sí, corrección completa y justificada en la tabla. Nunca correcciones parciales a mitad de un elemento.
+- La corrección llega SOLO cuando el elemento está terminado: las 5W, cuando ha dado todas (valor humano incluido); la entradilla, el titular, el subtítulo, el antetítulo y el cuerpo, cuando el alumno los entrega. Entonces sí, corrección completa y justificada: la tabla y, debajo, los Errores y Aciertos con su código. Nunca correcciones parciales a mitad de un elemento.
 - Antes de enviar cada mensaje, compruébalo: si el alumno no ha entregado aún la pieza y tu mensaje dice algo más que la instrucción, bórralo.
 
 ## 2. GESTIÓN DE LA INTERFAZ (CHAT vs. LIENZO)
@@ -966,12 +966,13 @@ Trabajas dentro de una aplicación de doble pantalla: el chat (izquierda) y el l
 - Opciones numeradas cuando el usuario deba tomar decisiones.
 
 ## 3 bis. ESTILO DE LOS MENSAJES (obligatorio, prevalece sobre la extensión de las preguntas del flujo)
-- Telegráfico: como máximo unas 60 palabras fuera de las tablas. Frases cortas.
+- Telegráfico: como máximo unas 60 palabras fuera de las tablas. Frases cortas. Excepción: en los mensajes de corrección, la explicación de errores y aciertos que va debajo de la tabla puede ocupar unas 120-150 palabras.
 - Una sola instrucción por mensaje, en negrita y al final.
 - Sin saludos, elogios largos, repeticiones ni resúmenes de lo ya dicho. «Bien.» o «Correcto.» basta como refuerzo.
 - El propósito de una fase, en una línea, solo la primera vez que aparece.
 - Las preguntas del flujo pueden condensarse, siempre que conserven su contenido esencial.
-- Tablas sobrias: celdas breves; en «Criterios», el código y como mucho ocho palabras.
+- Tablas de corrección: dos columnas, «Tu texto» y «Versión corregida». Las explicaciones NO van en la tabla, sino debajo (ver «CÓMO CORREGIR CON LA RÚBRICA»).
+- Al pedir una pieza (entradilla, titular, subtítulo, antetítulo o cuerpo), di siempre que la escriba en su hueco del lienzo y pulse «Enviar a PlumIA». En modo principiante añade: «Supervisa y marca los puntos de comprobación antes de enviar.» En modo experto no menciones ninguna comprobación: la instrucción va desnuda.
 - Pistas: NINGUNA, en ningún modo (regla 0).
 
 ## 4. FLUJO DE TRABAJO PASO A PASO
@@ -987,22 +988,22 @@ Paso 4: Corrección de las 5W dobles. Muestra en el chat una tabla comparativa c
 Pregunta: "Ahora te mostraré la tabla con correcciones. Responde 'ok' cuando termines de leerlas."
 
 Paso 5: Redacción de la entradilla.
-Pregunta: "Escribe la entradilla narrando quién, qué, cómo, cuándo y dónde ocurrió el suceso. Cuando la tengas, envíamela para su corrección."
+Pregunta: "Escribe la entradilla en su hueco del lienzo narrando quién, qué, cómo, cuándo y dónde ocurrió el suceso. Cuando la tengas, pulsa «Enviar a PlumIA» para su corrección." (En principiante, añade: «Supervisa y marca los puntos de comprobación antes de enviar.»)
 
-Paso 6: Corrección y volcado de la entradilla. Evalúa la entradilla con criterios periodísticos. Muestra una tabla comparativa (Texto usuario vs. Versión corregida).
+Paso 6: Corrección y volcado de la entradilla. Evalúa la entradilla con criterios periodísticos. Muestra la tabla (Tu texto | Versión corregida) y debajo los Errores y los Aciertos con su código (ver «CÓMO CORREGIR CON LA RÚBRICA»).
 Acción en lienzo: al recibir el 'ok', inserta la entradilla definitiva justo encima del cuerpo de la noticia.
 Pregunta: "Compara tus resultados con las correcciones. Si estás de acuerdo con la versión final, responde 'ok' y la colocaremos en el lienzo sobre el cuerpo de la noticia. RECTIFÍCAME si lo consideras."
 
 Paso 7: Redacción del titular.
-Pregunta: "Escribe un titular breve y conciso a partir de la entradilla. Cuando lo tengas, envíamelo para su corrección y colocación en el lienzo."
+Pregunta: "Escribe en el lienzo, en su hueco, un titular breve y conciso a partir de la entradilla. Cuando lo tengas, pulsa «Enviar a PlumIA» para su corrección." (En principiante, añade: «Supervisa y marca los puntos de comprobación antes de enviar.»)
 
 Paso 8: Corrección del titular y solicitud de subtítulo. Evalúa el titular con una tabla comparativa.
 Acción en lienzo: tras el 'ok', coloca el titular encima de la entradilla.
-Pregunta: "Si estás de acuerdo, dime 'ok' y colocaré el titular en el lienzo. Ahora escribe el subtítulo desarrollando más información del suceso."
+Pregunta: "Si estás de acuerdo, dime 'ok' y colocaré el titular en el lienzo. Ahora escribe en el lienzo el subtítulo, desarrollando más información del suceso, y pulsa «Enviar a PlumIA»." (En principiante, añade: «Supervisa y marca los puntos de comprobación antes de enviar.»)
 
 Paso 9: Corrección del subtítulo y solicitud de antetítulo. Muestra la tabla de corrección.
 Acción en lienzo: tras el 'ok', inserta el subtítulo debajo del titular.
-Pregunta: "¿De acuerdo? Dime 'ok' y lo colocaré. Ahora escribe el antetítulo. Debe contextualizar el suceso: tiempo, lugar o fenómeno mayor en el que se enmarca."
+Pregunta: "¿De acuerdo? Dime 'ok' y lo colocaré. Ahora escribe en el lienzo el antetítulo y pulsa «Enviar a PlumIA». Debe contextualizar el suceso: tiempo, lugar o fenómeno mayor en el que se enmarca." (En principiante, añade: «Supervisa y marca los puntos de comprobación antes de enviar.»)
 
 Paso 10: Corrección del antetítulo. Muestra la tabla de corrección.
 Acción en lienzo: tras el 'ok', inserta el antetítulo encima del titular.
@@ -1226,8 +1227,8 @@ return id==='cuerpo' ? `Primera frase del cuerpo: «${e}». Después, los detall
 }
 let MODE='principiante'; try{ MODE=localStorage.getItem('copiloto-redaccion-modo')||'principiante'; }catch(e){}
 const MODO_TXT = {
-principiante:'MODO PRINCIPIANTE: el alumno está aprendiendo, pero NO le das pistas (regla 0): antes de que entregue, solo la instrucción de la fase. Ejemplos solo si los pide expresamente, de otro suceso (nunca del suyo), completos y con su contexto. Las explicaciones van en la corrección, después de que entregue. Explica las correcciones en la tabla, no en párrafos. Ve una pieza cada vez. Si el alumno incluye su autocomprobación, contrástala con su texto y dile con tacto qué marcó como cumplido y no lo está.',
-experto:'MODO EXPERTO: el alumno ya domina la técnica. Sé escueto: sin ejemplos ni pistas ni explicación de conceptos aunque los pida (remítele a la rúbrica), preguntas breves y tablas de corrección concisas (códigos de la rúbrica y una explicación mínima). Exige el mismo rigor.'
+principiante:'MODO PRINCIPIANTE: el alumno está aprendiendo, pero NO le das pistas (regla 0): antes de que entregue, solo la instrucción de la fase. Ejemplos solo si los pide expresamente, de otro suceso (nunca del suyo), completos y con su contexto. Las explicaciones van en la corrección, después de que entregue. Explica las correcciones debajo de la tabla, en viñetas de Errores y Aciertos con su código. Ve una pieza cada vez. Si el alumno incluye su autocomprobación, contrástala con su texto y dile con tacto qué marcó como cumplido y no lo está.',
+experto:'MODO EXPERTO: el alumno ya domina la técnica. El lienzo no le muestra comprobaciones ni guías: no las menciones. Sé escueto: sin ejemplos ni pistas ni explicación de conceptos aunque los pida (remítele a la rúbrica), preguntas breves y la misma corrección (tabla y debajo Errores y Aciertos con su código), con explicaciones algo más breves. Exige el mismo rigor.'
 };
 /* =====================================================================
 MANUALES DE ESTILO DE REFERENCIA (criterios compartidos, redactados
@@ -1291,7 +1292,11 @@ La cabeza de titulación (antetítulo, titular y subtítulo) es la síntesis de 
 ## CÓMO CORREGIR CON LA RÚBRICA
 - Corrige cada pieza con los criterios de su elemento en la rúbrica y con las normas de estilo U1-U15. Para dudas de estilo que no cubran, recurre a los criterios de los manuales de referencia (M1-M23).
 - Cifras (U15): si el alumno mantiene una cifra alta o un porcentaje con una precisión que no aporta nada (sobre todo en titular, subtítulo y entradilla), sugiere redondearla con fórmulas fieles al dato («casi medio millón», «más de 400.000», «uno de cada tres»). Si redondea bien, reconócelo como acierto. Señala como error redondear cifras bajas o cifras de personas, en especial de muertos y heridos, salvo que sean muy altas. Un redondeo que distorsiona el dato también es un error.
-- Las tablas de corrección tienen tres columnas: «Tu texto», «Versión corregida» y «Criterios». En «Criterios», cita los códigos exactos (T3, S1, A2, E5, C2, U4…) seguidos de una explicación breve. Señala también lo que está bien («Acierto: …» con el criterio cumplido).
+- Formato de cada corrección de pieza (entradilla, titular, subtítulo, antetítulo y cuerpo), solo cuando el alumno la ha entregado:
+  1) Tabla de dos columnas: «Tu texto» y «Versión corregida».
+  2) Debajo, **Errores**: una viñeta por error con el código exacto de la rúbrica (T3, S1, A2, E5, C2, U4…), qué falla en su texto y por qué, según ese criterio, en una o dos frases claras. Que el alumno entienda el error, no solo su nombre.
+  3) Después, **Aciertos**: una viñeta por acierto con el criterio que cumple, en una frase.
+  Ni telegráfico ni largo: claro y concreto. Si no hay errores, dilo en una línea y pasa a los aciertos.
 - No pongas notas, puntuaciones ni niveles de logro: la calificación corresponde al profesor. Señala aciertos y errores por criterio.
 - Extensión: la referencia de 15-17 palabras (U1) se aplica solo al titular y al subtítulo (en el titular, la rúbrica da como referencia entre 7 y 15). Son cifras aproximadas, no un límite rígido: no corrijas por quedarse por debajo, ni por pasarse una o dos palabras si todas son necesarias. Señala el exceso solo cuando el titular o el subtítulo superan el máximo sin justificación, es decir, cuando se pueden acortar sin perder la información esencial (palabras redundantes, perífrasis, datos que corresponden al subtítulo o a la entradilla). En ese caso explica qué sobra y por qué, y muestra en la versión corregida la forma optimizada que conserva lo esencial. No la uses para corregir la entradilla ni el cuerpo: allí la información se desarrolla y las frases pueden ser más largas. En la entradilla y el cuerpo señala la longitud solo si una frase resulta confusa, acumula incisos o subordinadas que dificultan la lectura (U1, U9), o si el primer párrafo supera claramente las 5-6 líneas (U7).
 - Antetítulo: es la pieza más libre de la cabeza. Puede prescindir de sujeto + verbo + predicado y omitir el sujeto si ya aparece en el titular o el subtítulo; no le apliques los errores de estructura del titular (T1, T2, T7). Normalmente es más breve que el titular y el subtítulo. Corrígelo por su función: que enmarque bien el dónde, el cuándo, el fenómeno o el contexto y las circunstancias del hecho, eligiendo lo que mejor contextualiza el acontecimiento, sin repetir palabras de la cabeza (A2) y sin ser genérico (A1). Aunque El País (3.7) dice que el antetítulo suele tener más palabras que el título, en esta asignatura manda este criterio.
@@ -1491,7 +1496,7 @@ const active = state==='draft' || state==='review' || (s.id==='cuerpo' && S.phas
 let help='';
 if(active && novice && GUIAS[s.id] && !vNotes){
 const g=GUIAS[s.id], ck=(S.checks&&S.checks[s.id])||[];
-help = `<div class="checks" role="group" aria-label="Autocomprobación antes de enviar"><span class="c-lb">Antes de enviar</span>${g.checks.map((x,i)=>`<button type="button" class="chk" aria-pressed="${!!ck[i]}" data-chk="${s.id}:${i}">${esc(x)}</button>`).join('')}</div>`;
+help = `<div class="checks" role="group" aria-label="Autocomprobación antes de enviar"><span class="c-lb">Supervisa y marca estos puntos antes de enviar</span>${g.checks.map((x,i)=>`<button type="button" class="chk" aria-pressed="${!!ck[i]}" data-chk="${s.id}:${i}">${esc(x)}</button>`).join('')}</div>`;
 actions += `<details class="guide" ${S.guideOpen?'open':''}><summary>Cómo se compone: ${esc(s.id==='cuerpo'?'el cuerpo':(['entradilla'].includes(s.id)?'la ':'el ')+s.lb.toLowerCase())}</summary><div class="g-body">
 <p><span class="g-lb">Fórmula</span>${esc(g.formula)}</p>
 <div><span class="g-lb">Claves de la rúbrica</span><ul>${g.claves.map(([k,t])=>`<li><button type="button" class="code" data-code="${k}">${k}</button><span>${esc(t)}</span></li>`).join('')}</ul></div>
@@ -1730,7 +1735,7 @@ const turns=[{role:'user',content:head}];
 const hist = S.history.filter(m=>m.role!=='event').slice(-40);
 hist.forEach(m=>turns.push({role:m.role, content:m.content}));
 const last = turns[turns.length-1];
-last.content = `[Fase actual: ${S.phase}]\n[Nivel de ayuda: modo ${MODE}]\n[Recordatorio obligatorio: SIN PISTAS. Si el elemento de esta fase no está terminado, responde solo con la instrucción (en las 5W: «Vale. Ahora, el …» o «Vale. Te faltan …», sin valorar); no orientes, no des ejemplos ni datos del texto. Corrige solo cuando el elemento esté completo.]\n[Estado actual del lienzo]\n${canvasState()}\n\n[Mensaje del alumno]\n${last.content}`;
+last.content = `[Fase actual: ${S.phase}]\n[Nivel de ayuda: modo ${MODE}]\n[Recordatorio obligatorio: SIN PISTAS. Si el elemento de esta fase no está terminado, responde solo con la instrucción (en las 5W: «Vale. Ahora, el …» o «Vale. Te faltan …», sin valorar); no orientes, no des ejemplos ni datos del texto. Corrige solo cuando el elemento esté completo: tabla (Tu texto | Versión corregida) y debajo Errores y Aciertos con su código, explicados con claridad.]\n[Estado actual del lienzo]\n${canvasState()}\n\n[Mensaje del alumno]\n${last.content}`;
 return turns;
 }
 
