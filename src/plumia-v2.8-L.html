@@ -711,6 +711,13 @@ mark{border-radius:0}
 #vidbox.compact .vid{max-width:440px}
 #vidbox.compact{padding-bottom:14px;border-bottom:1px solid var(--line)}
 .vid-open{display:inline-block;margin-top:8px;font-size:.84rem;color:var(--ink);text-decoration:underline;text-decoration-color:var(--yellow);text-decoration-thickness:2px;text-underline-offset:3px}
+
+/* v2.8 · Estado de cada pieza: colocada o por hacer */
+.st-pill{font-family:var(--font-slab);font-weight:850;font-size:.56rem;letter-spacing:.12em;text-transform:uppercase;padding:2px 7px;border:1.5px solid;border-radius:var(--r);line-height:1.35;white-space:nowrap}
+.st-pill.ok{color:var(--ok);border-color:var(--ok);background:#e8f5ee}
+.st-pill.todo{color:var(--mm-danger);border-color:var(--mm-danger);background:#fdecea}
+.slot.empty{opacity:1}
+.slot.empty .slot-tag{color:var(--muted)}
 </style>
 </head>
 <body>
@@ -718,7 +725,7 @@ mark{border-radius:0}
 <div class="app">
 <header class="top">
 <div class="brand">
-<div class="wordmark"><h1 aria-label="PlumIA"><svg class="p-nib" viewBox="0 0 46 108" aria-hidden="true" focusable="false"><path fill-rule="evenodd" d="M2 0H30C41 0 46 8 46 22V25C46 40 40 47 30 47H17V86L9.5 107L2 86Z M31 17.5a6.5 6.5 0 1 0 0.01 0Z M7.4 66H11.6L9.75 107H9.25Z"/></svg><span aria-hidden="true">lum<em>IA</em></span></h1><span class="ver">v2.7 · L</span></div>
+<div class="wordmark"><h1 aria-label="PlumIA"><svg class="p-nib" viewBox="0 0 46 108" aria-hidden="true" focusable="false"><path fill-rule="evenodd" d="M2 0H30C41 0 46 8 46 22V25C46 40 40 47 30 47H17V86L9.5 107L2 86Z M31 17.5a6.5 6.5 0 1 0 0.01 0Z M7.4 66H11.6L9.75 107H9.25Z"/></svg><span aria-hidden="true">lum<em>IA</em></span></h1><span class="ver">v2.8 · L</span></div>
 </div>
 <ol class="rail" id="rail" aria-label="Fases de la noticia"></ol>
 <div class="top-actions">
@@ -1477,6 +1484,8 @@ let state = c.status==='colocado' ? 'placed' : isDraftPhase ? (c.status==='revis
 if(s.id==='cuerpo' && c.status==='colocado') state='placed';
 const vNotes = s.id==='cuerpo' && S.video && S.phase==='fuente'; if(vNotes) state='draft';
 const label = vNotes ? 'Cuerpo de la noticia · tus notas del vídeo' : s.id==='cuerpo' && S.finalBody ? 'Cuerpo de la noticia · versión final' : s.lb;
+const hecho = s.id==='cuerpo' ? !!S.finalBody : state==='placed';
+const pill = `<span class="st-pill ${hecho?'ok':'todo'}">${hecho?'Colocado':'Por hacer'}</span>`;
 let stateTxt = state==='empty' ? ICON_LOCK : state==='draft' ? '<span class="state">· tu turno</span>' : state==='review' ? '<span class="state">· en corrección</span>' : '';
 const nv=(S.versions[s.id]||[]).length, novice = MODE==='principiante';
 const gauge = novice && s.max && (state==='draft'||state==='review') && s.id!=='entradilla' ? `<div class="gauge" data-gauge="${s.id}" aria-hidden="true"><span class="zone"></span><i></i></div>` : '';
@@ -1506,7 +1515,7 @@ const vers = openVer===s.id ? `<ol class="vers">${(S.versions[s.id]||[]).map((v,
 const markHint = s.id==='cuerpo' && S.phase==='5w' && novice ? `<p class="mark-hint">Truco: busca solo las W del hecho principal. Selecciona un fragmento del texto y márcalo con su W; se subraya en color y pasa a tu mensaje.</p>` : '';
 if(markHint) actions = markHint + actions;
 const allck = active && novice && GUIAS[s.id] && GUIAS[s.id].checks.every((_,i)=>S.checks&&S.checks[s.id]&&S.checks[s.id][i]);
-h += `<div class="slot ${state} ${state==='empty'&&!novice?'bare':''} ${allck?'allchecked':''}" id="s-${s.id}"><div class="slot-tag">${esc(label)} ${stateTxt}${count}</div>${inner}${gauge}${actions}</div>${vers}${notes?`<div class="notes">${notes}</div>`:''}`;
+h += `<div class="slot ${state} ${state==='empty'&&!novice?'bare':''} ${allck?'allchecked':''}" id="s-${s.id}"><div class="slot-tag">${esc(label)} ${pill} ${stateTxt}${count}</div>${inner}${gauge}${actions}</div>${vers}${notes?`<div class="notes">${notes}</div>`:''}`;
 });
 $('slots').innerHTML = h;
 if(complete && !S.celebrated){
