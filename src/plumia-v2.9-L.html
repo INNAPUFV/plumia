@@ -682,8 +682,9 @@ mark{border-radius:0}
 /* v1.8 · Logotipo: la P de PlumIA es una plumilla (punta en la base, respiradero en el ojo, hendidura en el asta) */
 .brand .mark{display:none}
 .wordmark h1{font-size:1.95rem;color:#fff;white-space:nowrap}
-.wordmark h1 em{font-style:normal;color:var(--yellow)}
-.p-nib{height:1.08em;width:auto;vertical-align:-.22em;margin-right:.03em;fill:var(--yellow)}
+/* v2.9 · Marca PlumilIA sobre carbón: letras y plumilla en blanco, IA marcada con rotulador amarillo (62–92 % del alto) */
+.wordmark h1 em{font-style:normal;color:#fff;background:linear-gradient(transparent 62%,var(--yellow) 62%,var(--yellow) 92%,transparent 92%);padding:0 .03em}
+.p-nib{height:1.08em;width:auto;vertical-align:-.22em;margin-right:.03em;fill:#fff}
 @media (max-width:860px){ .wordmark h1{font-size:1.7rem} }
 
 /* v1.8 · Botones rellenos en gris carbón (#393836), como la barra: más suaves que el negro puro */
@@ -725,7 +726,7 @@ mark{border-radius:0}
 <div class="app">
 <header class="top">
 <div class="brand">
-<div class="wordmark"><h1 aria-label="PlumIA"><svg class="p-nib" viewBox="0 0 46 108" aria-hidden="true" focusable="false"><path fill-rule="evenodd" d="M2 0H30C41 0 46 8 46 22V25C46 40 40 47 30 47H17V86L9.5 107L2 86Z M31 17.5a6.5 6.5 0 1 0 0.01 0Z M7.4 66H11.6L9.75 107H9.25Z"/></svg><span aria-hidden="true">lum<em>IA</em></span></h1><span class="ver">v2.8 · L</span></div>
+<div class="wordmark"><h1 aria-label="Plumilla"><svg class="p-nib" viewBox="0 0 46 108" aria-hidden="true" focusable="false"><path fill-rule="evenodd" d="M2 0H30C41 0 46 8 46 22V25C46 40 40 47 30 47H17V86L9.5 107L2 86Z M31 17.5a6.5 6.5 0 1 0 0.01 0Z M7.4 66H11.6L9.75 107H9.25Z"/></svg><span aria-hidden="true">lumil<em>IA</em></span></h1><span class="ver">v2.9 · L</span></div>
 </div>
 <ol class="rail" id="rail" aria-label="Fases de la noticia"></ol>
 <div class="top-actions">
