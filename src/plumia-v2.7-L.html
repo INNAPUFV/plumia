@@ -718,7 +718,7 @@ mark{border-radius:0}
 <div class="app">
 <header class="top">
 <div class="brand">
-<div class="wordmark"><h1 aria-label="PlumIA"><svg class="p-nib" viewBox="0 0 46 108" aria-hidden="true" focusable="false"><path fill-rule="evenodd" d="M2 0H30C41 0 46 8 46 22V25C46 40 40 47 30 47H17V86L9.5 107L2 86Z M31 17.5a6.5 6.5 0 1 0 0.01 0Z M7.4 66H11.6L9.75 107H9.25Z"/></svg><span aria-hidden="true">lum<em>IA</em></span></h1><span class="ver">v2.6 · L</span></div>
+<div class="wordmark"><h1 aria-label="PlumIA"><svg class="p-nib" viewBox="0 0 46 108" aria-hidden="true" focusable="false"><path fill-rule="evenodd" d="M2 0H30C41 0 46 8 46 22V25C46 40 40 47 30 47H17V86L9.5 107L2 86Z M31 17.5a6.5 6.5 0 1 0 0.01 0Z M7.4 66H11.6L9.75 107H9.25Z"/></svg><span aria-hidden="true">lum<em>IA</em></span></h1><span class="ver">v2.7 · L</span></div>
 </div>
 <ol class="rail" id="rail" aria-label="Fases de la noticia"></ol>
 <div class="top-actions">
@@ -833,23 +833,19 @@ mark{border-radius:0}
 <button class="close-modal" id="progClose" type="button" aria-label="Cerrar">×</button>
 </div>
 <div class="modal-body">
-<p class="prog-warn" id="progWarn">Gemini puede recargar la app y en este entorno el navegador no conserva tu trabajo. Guarda el progreso de vez en cuando y recupéralo si se reinicia.</p>
+<p class="prog-warn" id="progWarn">Gemini puede recargar la app y en este entorno el navegador no conserva tu trabajo. Descarga el archivo de progreso de vez en cuando (se guarda en tu carpeta de descargas) y, si la app se reinicia, ábrelo aquí.</p>
 <div class="prog-grid">
 <section>
 <h3>Guardar</h3>
 <p>Descarga un archivo con todo tu ejercicio: lienzo, conversación y versiones.</p>
 <button class="btn small accent" id="progSave" type="button">Descargar archivo de progreso</button>
-<button class="btn small outline" id="progCopy" type="button">Copiar código de progreso</button>
 <p class="prog-meta" id="progLast"></p>
 </section>
 <section>
 <h3>Recuperar</h3>
-<p>Sustituye el ejercicio actual por el que guardaste.</p>
+<p>Si la app se ha reiniciado, abre el último archivo que descargaste: sustituye el ejercicio actual por el guardado.</p>
 <label class="btn small outline" for="progFile">Abrir archivo de progreso</label>
 <input id="progFile" type="file" accept=".json,application/json,text/plain" hidden>
-<label class="prog-lb" for="progPaste">o pega aquí el código copiado</label>
-<textarea id="progPaste" rows="3" placeholder="Pega el código de progreso…"></textarea>
-<button class="btn small" id="progLoad" type="button">Recuperar desde el código</button>
 <p class="err" id="progErr" hidden></p>
 </section>
 </div>
@@ -2176,7 +2172,7 @@ function restoreFrom(text){
   viewMode='edit'; openVer=null; wOpen=false; busy=false;
   _saveOrig(); markSaved(); renderAll(); closeProg(); toast('Ejercicio recuperado');
 }
-function openProg(){ $('progErr').hidden=true; $('progPaste').value=''; $('progModal').hidden=false; $('progSave').focus(); }
+function openProg(){ $('progErr').hidden=true; $('progModal').hidden=false; $('progSave').focus(); }
 function closeProg(){ $('progModal').hidden=true; }
 $('progBtn').onclick=openProg; $('progClose').onclick=closeProg;
 $('progModal').addEventListener('click',e=>{ if(e.target.id==='progModal') closeProg(); });
@@ -2186,18 +2182,12 @@ $('progSave').onclick=async()=>{
   const d=new Date(), stamp=d.toISOString().slice(0,16).replace(/[-:T]/g,'');
   const file='plumia-progreso-'+(norm(studentName)||'alumno')+'-'+stamp+'.json';
   try{ await downloads.save({filename:file, data:new Blob([progressPayload()],{type:'application/json'})}); markSaved(); toast('Progreso descargado'); }
-  catch(e){ toast('No se ha podido descargar. Usa «Copiar código de progreso».'); }
-};
-$('progCopy').onclick=()=>{
-  if(!S.history.length){ toast('Aún no hay nada que guardar'); return; }
-  const code=btoa(unescape(encodeURIComponent(progressPayload())));
-  copyText(code,'Código copiado: pégalo en un documento tuyo'); markSaved();
+  catch(e){ toast('No se ha podido descargar el archivo. Prueba con Chrome o Edge en un ordenador.'); }
 };
 $('progFile').addEventListener('change',e=>{
   const f=e.target.files && e.target.files[0]; if(!f) return;
   const r=new FileReader(); r.onload=()=>restoreFrom(r.result); r.onerror=()=>{ $('progErr').hidden=false; $('progErr').textContent='No se ha podido leer el archivo.'; }; r.readAsText(f); e.target.value='';
 });
-$('progLoad').onclick=()=>restoreFrom($('progPaste').value);
 window.addEventListener('beforeunload',e=>{ if(S.history.length && dirty>0){ e.preventDefault(); e.returnValue=''; } });
 // Aviso suave la primera vez que se coloca una pieza
 const _applyReply = applyReply;
