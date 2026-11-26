@@ -224,6 +224,8 @@ mark.w-como{background:var(--w-como);--mk:var(--wk-como)} mark.w-donde{backgroun
 .seltool{position:absolute;z-index:20;background:var(--ufv-night);border-radius:12px;padding:6px;display:flex;flex-wrap:wrap;gap:4px;max-width:340px;box-shadow:0 12px 30px rgba(15,16,16,.3)}
 .seltool button{border:none;border-radius:8px;padding:5px 9px;font-size:.74rem;font-weight:700;color:var(--ufv-night);box-shadow:inset 0 -3px 0 var(--mk,transparent)}
 .seltool button.w-valor{--mk:var(--wk-valor)} .seltool button.w-quien{--mk:var(--wk-quien)} .seltool button.w-que{--mk:var(--wk-que)} .seltool button.w-como{--mk:var(--wk-como)} .seltool button.w-donde{--mk:var(--wk-donde)} .seltool button.w-cuando{--mk:var(--wk-cuando)} .seltool button.w-porque{--mk:var(--wk-porque)}
+.seltool .unmark{background:#fff;color:var(--mm-danger);border:1.5px solid var(--mm-danger);box-shadow:none}
+.seltool mark,#s-cuerpo .txt mark{cursor:pointer}
 .seltool .lbl{width:100%;color:var(--ufv-on-dark);font-family:var(--font-slab);font-size:.62rem;text-transform:uppercase;letter-spacing:.08em;padding:2px 4px 4px}
 
 /* Rúbrica */
@@ -357,6 +359,9 @@ mark.w-como{background:var(--w-como);--mk:var(--wk-como)} mark.w-donde{backgroun
 }
 
 /* Guardar / recuperar progreso */
+.resume{margin:14px 0 0;padding:12px 0 0;border-top:1.5px solid var(--ink,#0F1010);display:flex;flex-direction:column;align-items:flex-start;gap:6px;font-size:.86rem}
+.resume b{font-weight:700}
+label.btn{cursor:pointer}
 .save-btn{position:relative}
 .save-btn.nudge::after{content:"";position:absolute;top:-3px;right:-3px;width:11px;height:11px;border-radius:50%;background:var(--mm-lime);box-shadow:0 0 0 2px var(--mm-navy);animation:nudge 1.6s ease-in-out infinite}
 @keyframes nudge{50%{transform:scale(1.35)}}
@@ -728,7 +733,7 @@ mark{border-radius:0}
 <div class="app">
 <header class="top">
 <div class="brand">
-<div class="wordmark"><h1 aria-label="Plumilla"><svg class="p-nib" viewBox="0 0 46 108" aria-hidden="true" focusable="false"><path fill-rule="evenodd" d="M2 0H30C41 0 46 8 46 22V25C46 40 40 47 30 47H17V86L9.5 107L2 86Z M31 17.5a6.5 6.5 0 1 0 0.01 0Z M7.4 66H11.6L9.75 107H9.25Z"/></svg><span aria-hidden="true">lumil<em>IA</em></span></h1><span class="ver">v2.12 · L</span></div>
+<div class="wordmark"><h1 aria-label="Plumilla"><svg class="p-nib" viewBox="0 0 46 108" aria-hidden="true" focusable="false"><path fill-rule="evenodd" d="M2 0H30C41 0 46 8 46 22V25C46 40 40 47 30 47H17V86L9.5 107L2 86Z M31 17.5a6.5 6.5 0 1 0 0.01 0Z M7.4 66H11.6L9.75 107H9.25Z"/></svg><span aria-hidden="true">lumil<em>IA</em></span></h1><span class="ver">v2.13 · L</span></div>
 </div>
 <ol class="rail" id="rail" aria-label="Fases de la noticia"></ol>
 <div class="top-actions">
@@ -774,7 +779,7 @@ mark{border-radius:0}
 <button class="btn outline small" id="viewBtn" type="button">Vista publicada</button>
 <button class="btn outline small" id="copyBtn" type="button">Copiar noticia</button>
 <button class="btn outline small" id="reportBtn" type="button">Informe</button>
-<button class="btn small save-btn" id="progBtn" type="button" title="Guardar o recuperar tu progreso">Guardar</button>
+<button class="btn small save-btn" id="progBtn" type="button" title="Guardar tu progreso en un archivo o recuperar uno guardado">Guardar</button>
 </div>
 <div class="done-banner" id="doneBanner" hidden>
 <div><b>Noticia completa</b><span>Ya tienes antetítulo, titular, subtítulo, entradilla y cuerpo. Revísala como saldría publicada, prepara el informe y, si quieres, déjanos tu opinión sobre PlumIA.</span></div>
@@ -1430,6 +1435,7 @@ h += `<div class="msg ai"><div class="bubble welcome">
 <button class="btn outline" id="classBtn" type="button">Ejercicio de clase</button>
 </div>
 <p class="small start-help">Aleatorio: PlumIA inventa uno nuevo. De clase: un teletipo o un vídeo, el mismo para todos, con la clave que te dé tu profesor.</p>
+<div class="resume"><b>¿Ya habías empezado y la app se ha reiniciado?</b><span>Abre el último archivo de progreso que descargaste con «Guardar» (está en tu carpeta de descargas: plumia-progreso-…) y sigues donde lo dejaste.</span><label class="btn outline" for="progFile" tabindex="0" role="button">Recuperar ejercicio guardado</label></div>
 <form class="class-pick" id="classPick" hidden autocomplete="off"><label for="classKey">Clave del profesor</label><div class="key-row"><input id="classKey" type="text" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="Escribe la clave que te ha dado"><button class="btn" id="classGo" type="submit">Abrir ejercicio</button></div><p class="err" id="classErr" hidden></p></form>
 <p class="err" id="startErr" hidden></p></div></div>`;
 }
@@ -1528,7 +1534,7 @@ else if(s.id==='cuerpo' && S.phase==='cuerpo' && !S.finalBody) actions = help + 
 const notes = (S.notes[s.id]||[]).map((n,j)=>`<div class="notecard"><div><b>Comentario de PlumIA</b>${esc(n)}</div><button type="button" aria-label="Descartar comentario" data-note="${s.id}:${j}">×</button></div>`).join('');
 if(s.id==='cuerpo' && !(S.video && S.phase==='fuente')) h += '<div class="rule"></div>';
 const vers = openVer===s.id ? `<ol class="vers">${(S.versions[s.id]||[]).map((v,i)=>`<li><span class="vmeta">v${i+1} · ${esc(v.src)} · ${new Date(v.ts).toLocaleTimeString('es-ES',{hour:'2-digit',minute:'2-digit'})}</span><span class="vtxt">${esc(v.text)}</span></li>`).join('')}</ol>` : '';
-const markHint = s.id==='cuerpo' && S.phase==='5w' && novice ? `<p class="mark-hint">Truco: busca solo las W del hecho principal. Selecciona un fragmento del texto y márcalo con su W; se subraya en color y pasa a tu mensaje.</p>` : '';
+const markHint = s.id==='cuerpo' && S.phase==='5w' && novice ? `<p class="mark-hint"><b>Dos formas de dar las 5W dobles</b> (solo las del hecho principal): <b>subráyalas</b> aquí, en el teletipo (selecciona el fragmento y elige su W; pasa a tu mensaje), o <b>escríbelas</b> una a una en el cuadro del copiloto. El valor humano no está en el texto: escríbelo siempre en el copiloto. ¿Te has equivocado? Pulsa sobre el subrayado y elige «Quitar subrayado».</p>` : '';
 if(markHint) actions = markHint + actions;
 const allck = active && novice && GUIAS[s.id] && GUIAS[s.id].checks.every((_,i)=>S.checks&&S.checks[s.id]&&S.checks[s.id][i]);
 h += `<div class="slot ${state} ${state==='empty'&&!novice?'bare':''} ${allck?'allchecked':''}" id="s-${s.id}"><div class="slot-tag">${esc(label)} ${pill} ${stateTxt}${count}</div>${inner}${gauge}${actions}</div>${vers}${notes?`<div class="notes">${notes}</div>`:''}`;
@@ -1597,23 +1603,42 @@ function renderFicha(){}
 /* ===================== Selección → marcar W ===================== */
 function setupSelTool(){
 const tool=$('seltool');
-tool.innerHTML = '<div class="lbl">Marcar como</div>' + WS.map(w=>`<button type="button" class="w-${w.k}" data-w="${w.k}">${w.lb}</button>`).join('');
-let range=null;
+tool.innerHTML = '<div class="lbl">Marcar como</div>' + WS.filter(w=>w.k!=='valor').map(w=>`<button type="button" class="w-${w.k}" data-w="${w.k}">${w.lb}</button>`).join('') + '<button type="button" class="unmark" data-unmark hidden>Quitar subrayado</button>';
+let range=null, hits=[];
+const marksIn=(body,r)=>[...body.querySelectorAll('mark')].filter(m=>{ try{ return r.intersectsNode(m); }catch(e){ return false; } });
+const setMode=only=>{ tool.querySelectorAll('.lbl,[data-w]').forEach(x=>x.hidden=only); tool.querySelector('[data-unmark]').hidden=!hits.length; };
 document.addEventListener('mouseup',check); document.addEventListener('keyup',check); document.addEventListener('touchend',()=>setTimeout(check,50));
 function check(e){
 if(e && tool.contains(e.target)) return;
 const sel=window.getSelection(), body=document.querySelector('#s-cuerpo .txt');
-if(S.phase!=='5w' || MODE!=='principiante' || !body || !sel.rangeCount || sel.isCollapsed){ tool.hidden=true; return; }
+if(S.phase!=='5w' || MODE!=='principiante' || !body || !sel.rangeCount){ tool.hidden=true; return; }
 const r=sel.getRangeAt(0);
 if(!body.contains(r.commonAncestorContainer)){ tool.hidden=true; return; }
-range=r.cloneRange();
-const rect=r.getBoundingClientRect(), desk=$('desk'), dr=desk.getBoundingClientRect();
+let rect;
+if(sel.isCollapsed){
+/* pulsación sobre un subrayado: solo se ofrece quitarlo */
+const n=r.startContainer, mk=(n.nodeType===1?n:n.parentElement).closest('mark');
+if(!mk || !body.contains(mk)){ tool.hidden=true; return; }
+hits=[mk]; range=null; rect=mk.getBoundingClientRect(); setMode(true);
+} else {
+range=r.cloneRange(); hits=marksIn(body,r); rect=r.getBoundingClientRect(); setMode(false);
+}
+const desk=$('desk'), dr=desk.getBoundingClientRect();
 tool.hidden=false;
 const left=Math.max(8, Math.min(rect.left-dr.left, dr.width-tool.offsetWidth-8));
 tool.style.left=left+'px'; tool.style.top=(rect.bottom-dr.top+desk.scrollTop+8)+'px';
 }
 tool.addEventListener('mousedown',e=>e.preventDefault());
 tool.addEventListener('click',e=>{
+if(e.target.closest('[data-unmark]')){
+const body=document.querySelector('#s-cuerpo .txt'), inp=$('input');
+hits.forEach(m=>{ if(!m.parentNode) return;
+const w=WS.find(x=>m.classList.contains('w-'+x.k));
+if(w && inp.value.trim()===`${w.lb}: ${m.textContent.trim()}`){ inp.value=''; autosize(); }
+const p=m.parentNode; while(m.firstChild) p.insertBefore(m.firstChild,m); p.removeChild(m); p.normalize(); });
+hits=[]; if(body) onEdit(body);
+window.getSelection().removeAllRanges(); tool.hidden=true; toast('Subrayado quitado'); return;
+}
 const b=e.target.closest('[data-w]'); if(!b||!range) return;
 const text=range.toString().trim(); if(!text) return;
 try{ const m=document.createElement('mark'); m.className='w-'+b.dataset.w; range.surroundContents(m); }catch(err){}
@@ -1825,6 +1850,8 @@ const t = m[2].trim().replace(/^\*\*(.*)\*\*$/s,'$1');
 S.canvas[id] = {text:t, html:'', status:'colocado'};
 addVersion(id, t, 'versión final colocada');
 if(id==='cuerpo') S.finalBody=true;
+/* entradilla validada: los subrayados de las W ya han cumplido su función y se retiran del texto */
+if(id==='entradilla' && S.canvas.cuerpo && S.canvas.cuerpo.html) S.canvas.cuerpo.html = S.canvas.cuerpo.html.replace(/<\/?mark\b[^>]*>/gi,'');
 placed.push(slot); lastPlaced=id;
 const cur=phaseIndex(S.phase), nx=NEXT_AFTER[id];
 if(nx && phaseIndex(nx)>cur) S.phase=nx;
@@ -2191,7 +2218,7 @@ function restoreFrom(text){
   let data=null; const t=String(text||'').trim();
   try{ data=JSON.parse(t); }catch(e){ try{ data=JSON.parse(decodeURIComponent(escape(atob(t)))); }catch(e2){} }
   const st = data && (data.state || data);
-  if(!st || !st.canvas || !Array.isArray(st.history)){ err.hidden=false; err.textContent='No reconozco ese progreso. Comprueba que es el archivo o el código que guardaste desde PlumIA.'; return; }
+  if(!st || !st.canvas || !Array.isArray(st.history)){ err.hidden=false; err.textContent='No reconozco ese archivo. Comprueba que es el que descargaste desde PlumIA con «Guardar» (plumia-progreso-…).'; if($('progModal').hidden) toast(err.textContent); return; }
   if(ctl) ctl.abort();
   S = Object.assign(blank(), st); if(data.name) studentName=data.name;
   viewMode='edit'; openVer=null; wOpen=false; busy=false;
@@ -2200,6 +2227,7 @@ function restoreFrom(text){
 function openProg(){ $('progErr').hidden=true; $('progModal').hidden=false; $('progSave').focus(); }
 function closeProg(){ $('progModal').hidden=true; }
 $('progBtn').onclick=openProg; $('progClose').onclick=closeProg;
+document.addEventListener('keydown',e=>{ const l=e.target.closest && e.target.closest('label[for="progFile"]'); if(l && (e.key==='Enter'||e.key===' ')){ e.preventDefault(); $('progFile').click(); } });
 $('progModal').addEventListener('click',e=>{ if(e.target.id==='progModal') closeProg(); });
 document.addEventListener('keydown',e=>{ if(e.key==='Escape' && !$('progModal').hidden) closeProg(); });
 $('progSave').onclick=async()=>{
